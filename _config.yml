@@ -9,11 +9,11 @@ pygments: true
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : Jekyll Bootstrap
-tagline: Site Tagline
+title : michaelmj dev home
+tagline: i hate capitals
 author :
   name : Michael Malinak
-  email : blah@email.test
+  email : m+dot+malinak(at)gmail+dot+com
   github : michaelmj
   twitter : michaelmj
 #  feedburner : feedname
@@ -99,7 +99,7 @@ JB :
   analytics :
     provider : google 
     google : 
-        tracking_id : 'UA-123-12'
+        tracking_id : 'UA-34277854-1'
     getclicky :
       site_id : 
     mixpanel :
