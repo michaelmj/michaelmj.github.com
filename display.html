@@ -8,17 +8,22 @@
 </head>
 <body>
   <main>
-    <h1>Your Assignment</h1>
-    <div id="card" style="padding:18px;border-radius:10px;background:#fff;"> 
-      <p id="info">Decoding...</p>
-      <p id="who" style="font-size:20px;font-weight:600"></p>
+    <h1 style="text-align:center;color:#c41e3a;margin-bottom:8px">🎄 Happy Holidays! 🎁</h1>
+    <h2 style="text-align:center;color:#165b33;margin-top:0;font-size:18px">2025 Malbert Secret Santa</h2>
+    
+    <div id="card" style="padding:24px;border-radius:12px;background:linear-gradient(135deg, #fff5f5 0%, #f0f9ff 100%);border:2px solid #c41e3a;box-shadow:0 4px 12px rgba(196,30,58,0.15)"> 
+      <p id="info" style="font-size:18px;color:#333;margin-bottom:16px;text-align:center">Decoding...</p>
+      <div style="background:#fff;padding:20px;border-radius:8px;margin:16px 0;border:3px solid #165b33">
+        <p style="font-size:16px;color:#666;margin:0 0 12px 0;text-align:center;font-weight:500">🎅 YOU ARE BUYING A GIFT FOR:</p>
+        <p id="who" style="font-size:32px;font-weight:700;color:#c41e3a;text-align:center;margin:0;text-transform:uppercase;letter-spacing:1px"></p>
+      </div>
+      <p style="font-size:14px;color:#555;margin-top:16px;text-align:center;font-style:italic">Remember: Keep it secret, keep it fun! 🤫✨</p>
     </div>
-    <p style="margin-top:12px;color:#666;font-size:13px">If you were given this link, it contains who you should get for this exchange.</p>
   </main>
   <script>
     function qs(k){ const params = new URLSearchParams(location.search); return params.get(k) }
     const enc = qs('e'); const seed = qs('s'); const giver = qs('giver'); const group = qs('group');
-    function showReceiver(name){ document.getElementById('info').textContent = 'Hello ' + (giver||'there') + ','; document.getElementById('who').textContent = name; }
+    function showReceiver(name){ document.getElementById('info').innerHTML = '👋 Hi <strong>' + (giver||'there') + '</strong>!'; document.getElementById('who').textContent = name; }
 
     // small helpers (matching app.js)
     function base64UrlDecode(s){ s = s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length %4) s += '='; const bin = atob(s); const arr = new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i); return arr }
