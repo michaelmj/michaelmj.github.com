@@ -1,7 +1,7 @@
 // Simple client-side generator for group secret assignments and short ids
 (function(){
   const el = id => document.getElementById(id);
-  const base = window.location.origin + window.location.pathname.replace(/index\.html$/, '');
+  const base = window.location.origin + window.location.pathname.replace(/[^\/]*\.html$/, '');
 
   function shortId(len=6){
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
