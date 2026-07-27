@@ -2,47 +2,953 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Banff trip plan, July 28 through August 6, 2026.">
-  <title>Banff Trip Plan | July 28–August 6, 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#153f3a">
+  <meta name="description" content="Mobile field guide for the Banff, Jasper, Lake Louise, Yoho, and Calgary trip, July 28 through August 6, 2026.">
+  <title>Our Rockies Trip · July 28–August 6, 2026</title>
   <style>
-    :root { --ink:#18323a; --muted:#5e6e70; --paper:#f5f5ef; --pine:#1f5b52; --lake:#dff0ef; --line:#c9d6d1; --card:#fffefa; --gold:#e7d39a; --warn:#8b3e25; }
-    * { box-sizing:border-box; } body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
-    header { padding:52px max(22px,calc((100% - 1080px)/2)); color:white; background:linear-gradient(125deg,#17473f,#286c61); } h1,h2,h3,p { margin-top:0; } h1 { max-width:800px; margin-bottom:9px; font:700 clamp(2.25rem,6vw,4.5rem)/1.03 Georgia,serif; } .subtitle { margin:0; max-width:760px; color:#e5f3ef; font-size:1.08rem; }
-    main { width:min(1080px,calc(100% - 32px)); margin:auto; padding:30px 0 64px; } .notice,.card { border:1px solid var(--line); border-radius:10px; background:var(--card); padding:19px; } .notice { margin-bottom:24px; background:var(--lake); } .notice p { margin-bottom:0; } h2 { font:700 1.45rem/1.2 Georgia,serif; } .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-bottom:28px; } .card h2 { font-size:1.22rem; margin-bottom:10px; }
-    table { width:100%; border-collapse:collapse; font-size:.94rem; } th,td { text-align:left; vertical-align:top; padding:9px 8px; border-bottom:1px solid var(--line); } th { color:var(--muted); font-weight:700; } .tag { display:inline-block; padding:1px 6px; border-radius:4px; color:#614e13; background:var(--gold); font-size:.77rem; font-weight:750; }
-    .days { display:grid; gap:15px; } .day { display:grid; grid-template-columns:146px 1fr; gap:20px; padding:20px 0; border-top:1px solid var(--line); } .date { color:var(--pine); font-weight:800; } .date span { display:block; color:var(--muted); font-size:.9rem; font-weight:500; } .day h2 { margin-bottom:9px; } .anchor { margin:0 0 11px; padding:10px 12px; border-left:4px solid var(--pine); background:var(--lake); } .day ul { margin:0; padding-left:20px; } .day li+li { margin-top:5px; }
-    .checks { margin-top:30px; background:#fdf8e8; } .checks ol { margin:0; padding-left:20px; } .checks li+li { margin-top:5px; } footer { margin-top:28px; color:var(--muted); font-size:.9rem; } a { color:var(--pine); }
-    @media (max-width:700px) { header { padding:38px 20px; } main { width:min(100% - 24px,1080px); } .grid,.day { grid-template-columns:1fr; } .day { gap:5px; } table { font-size:.85rem; } th,td { padding:7px 5px; } }
+    :root {
+      color-scheme: light;
+      --pine-950: #102f2c;
+      --pine-900: #153f3a;
+      --pine-800: #1d514a;
+      --pine-700: #28675d;
+      --pine-100: #dcebe7;
+      --pine-50: #eef6f3;
+      --ink: #17302f;
+      --muted: #5b6c69;
+      --paper: #f3f1e9;
+      --card: #fffdf7;
+      --white: #ffffff;
+      --line: #d5d9d2;
+      --gold: #f0d892;
+      --gold-ink: #624c0e;
+      --blue: #e5eff4;
+      --blue-ink: #235168;
+      --red: #f7e8e3;
+      --red-ink: #843b2a;
+      --shadow: 0 12px 34px rgba(22, 50, 46, .09);
+      --radius: 22px;
+      --header-offset: 68px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-offset) + 16px); }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: var(--pine-800); text-underline-offset: 3px; }
+    p, h1, h2, h3, h4 { margin-top: 0; }
+    h1, h2, h3 { font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif; }
+    h2 { font-size: clamp(1.65rem, 5vw, 2.15rem); line-height: 1.08; letter-spacing: -.025em; }
+    h3 { line-height: 1.2; }
+    ul, ol { padding-left: 1.25rem; }
+    li + li { margin-top: .5rem; }
+
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: 8px;
+      left: 8px;
+      transform: translateY(-150%);
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--pine-950);
+      font-weight: 800;
+    }
+    .skip-link:focus { transform: none; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 42px max(20px, calc((100% - 1120px) / 2)) 36px;
+      background:
+        radial-gradient(circle at 86% 15%, rgba(240, 216, 146, .24) 0 9%, transparent 9.5%),
+        linear-gradient(145deg, var(--pine-950), var(--pine-700));
+      color: var(--white);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -8%;
+      bottom: -80px;
+      width: 58%;
+      height: 170px;
+      background: rgba(255, 255, 255, .06);
+      clip-path: polygon(0 100%, 22% 42%, 39% 68%, 63% 8%, 100% 100%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 820px; }
+    .eyebrow {
+      margin-bottom: 12px;
+      color: #cde1dc;
+      font-size: .74rem;
+      font-weight: 850;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 720px;
+      margin-bottom: 12px;
+      font-size: clamp(2.55rem, 9vw, 5.25rem);
+      font-weight: 720;
+      letter-spacing: -.055em;
+      line-height: .96;
+    }
+    .hero-copy {
+      max-width: 660px;
+      margin-bottom: 22px;
+      color: #deece8;
+      font-size: clamp(1rem, 3vw, 1.13rem);
+    }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hero-meta span {
+      padding: 7px 11px;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .08);
+      font-size: .82rem;
+      font-weight: 750;
+    }
+
+    .main-nav {
+      position: sticky;
+      z-index: 20;
+      top: 0;
+      display: flex;
+      gap: 4px;
+      min-height: var(--header-offset);
+      padding: 9px max(12px, calc((100% - 1120px) / 2));
+      overflow-x: auto;
+      border-bottom: 1px solid rgba(23, 48, 47, .13);
+      background: rgba(255, 253, 247, .94);
+      box-shadow: 0 5px 20px rgba(22, 50, 46, .07);
+      backdrop-filter: blur(14px);
+      scrollbar-width: none;
+    }
+    .main-nav::-webkit-scrollbar, .day-tabs::-webkit-scrollbar { display: none; }
+    .main-nav a {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      min-height: 48px;
+      padding: 0 14px;
+      border-radius: 13px;
+      color: var(--ink);
+      font-size: .9rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .main-nav a:first-child { background: var(--pine-900); color: var(--white); }
+
+    main { width: min(1120px, calc(100% - 24px)); margin: 0 auto; padding: 24px 0 72px; }
+    section { scroll-margin-top: calc(var(--header-offset) + 16px); }
+    .section-heading { margin: 42px 2px 16px; }
+    .section-heading p { max-width: 690px; margin: 7px 0 0; color: var(--muted); }
+
+    .today-card {
+      display: grid;
+      gap: 20px;
+      padding: 24px;
+      border-radius: var(--radius);
+      background: var(--pine-900);
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .today-kicker {
+      margin-bottom: 8px;
+      color: #bcd9d2;
+      font-size: .76rem;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .today-card h2 { margin-bottom: 8px; font-size: clamp(1.8rem, 7vw, 2.8rem); }
+    .today-card p { margin-bottom: 0; color: #deece8; }
+    .today-facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .today-fact {
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .07);
+    }
+    .today-fact span { display: block; margin-bottom: 3px; color: #bcd9d2; font-size: .72rem; font-weight: 800; text-transform: uppercase; }
+    .today-fact strong { display: block; overflow-wrap: anywhere; font-size: .92rem; line-height: 1.3; }
+    .today-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 13px;
+      background: var(--gold);
+      color: var(--pine-950);
+      font: inherit;
+      font-size: .9rem;
+      font-weight: 850;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button.secondary { border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.09); color: var(--white); }
+    .button:focus-visible, summary:focus-visible, a:focus-visible { outline: 3px solid #ecbc48; outline-offset: 3px; }
+    .share-status { align-self: center; color: #d4e4e0; font-size: .82rem; }
+
+    .quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+    .quick-link {
+      display: flex;
+      min-height: 72px;
+      flex-direction: column;
+      justify-content: center;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--card);
+      color: var(--ink);
+      box-shadow: 0 5px 18px rgba(22, 50, 46, .04);
+      text-decoration: none;
+    }
+    .quick-link small { color: var(--muted); font-size: .72rem; font-weight: 750; text-transform: uppercase; }
+    .quick-link strong { font-size: .92rem; }
+
+    .decision-banner {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 17px 18px;
+      border: 1px solid #dbc779;
+      border-radius: 18px;
+      background: #fff7d9;
+    }
+    .decision-banner h3 { margin-bottom: 0; font-family: inherit; font-size: 1rem; }
+    .decision-banner p { margin: 0; color: #594e2c; font-size: .9rem; }
+
+    .day-tabs {
+      display: flex;
+      gap: 8px;
+      margin: 0 -12px 14px;
+      padding: 2px 12px 9px;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+    }
+    .day-tab {
+      flex: 0 0 66px;
+      min-height: 65px;
+      padding: 8px 7px;
+      scroll-snap-align: start;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--card);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+    .day-tab span, .day-tab strong { display: block; }
+    .day-tab span { color: var(--muted); font-size: .69rem; font-weight: 750; text-transform: uppercase; }
+    .day-tab strong { margin-top: 1px; font-size: 1.03rem; }
+    .day-tab[aria-current="date"] { border-color: var(--pine-800); background: var(--pine-900); color: var(--white); box-shadow: 0 5px 15px rgba(21, 63, 58, .2); }
+    .day-tab[aria-current="date"] span { color: #c7ddd7; }
+
+    .days { display: grid; gap: 12px; }
+    .day-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: 0 5px 20px rgba(22, 50, 46, .045);
+    }
+    .day-card.is-current { border: 2px solid var(--pine-700); box-shadow: var(--shadow); }
+    .day-card > summary {
+      display: grid;
+      grid-template-columns: 59px minmax(0, 1fr) 24px;
+      gap: 12px;
+      align-items: center;
+      min-height: 92px;
+      padding: 15px 16px;
+      list-style: none;
+      cursor: pointer;
+    }
+    .day-card > summary::-webkit-details-marker { display: none; }
+    .calendar-tile {
+      display: grid;
+      align-content: center;
+      min-height: 59px;
+      border-radius: 15px;
+      background: var(--pine-50);
+      color: var(--pine-900);
+      text-align: center;
+    }
+    .calendar-tile span, .calendar-tile strong { display: block; line-height: 1.05; }
+    .calendar-tile span { margin-bottom: 4px; font-size: .66rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .calendar-tile strong { font-size: 1.36rem; }
+    .day-card.is-current .calendar-tile { background: var(--pine-900); color: var(--white); }
+    .summary-copy { min-width: 0; }
+    .day-title { display: block; margin: 0 0 5px; font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif; font-size: clamp(1.08rem, 4vw, 1.28rem); letter-spacing: -.01em; line-height: 1.2; }
+    .summary-meta { display: flex; flex-wrap: wrap; gap: 5px 10px; color: var(--muted); font-size: .78rem; font-weight: 720; }
+    .summary-meta .time { color: var(--pine-800); }
+    .chevron { color: var(--pine-700); font-size: 1.25rem; transition: transform .2s ease; }
+    .day-card[open] .chevron { transform: rotate(180deg); }
+    .day-content { padding: 0 16px 19px 87px; }
+    .day-content p:last-child, .day-content ul:last-child { margin-bottom: 0; }
+
+    .callout {
+      margin: 0 0 13px;
+      padding: 13px 14px;
+      border-left: 4px solid var(--pine-700);
+      border-radius: 4px 14px 14px 4px;
+      background: var(--pine-50);
+      font-size: .94rem;
+    }
+    .callout.booked { border-color: #b8952d; background: #fff7d9; }
+    .callout.choice { border-color: #4e839b; background: var(--blue); }
+    .callout.warning { border-color: #b95d43; background: var(--red); color: var(--red-ink); }
+    .callout strong:first-child { color: var(--pine-900); }
+    .callout.booked strong:first-child { color: var(--gold-ink); }
+    .callout.warning strong:first-child { color: var(--red-ink); }
+    .day-list { margin: 0; padding-left: 1.15rem; }
+    .day-list li { padding-left: .15rem; }
+
+    .label {
+      display: inline-block;
+      margin-right: 5px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: var(--pine-100);
+      color: var(--pine-900);
+      font-size: .67rem;
+      font-weight: 900;
+      letter-spacing: .04em;
+      line-height: 1.25;
+      text-transform: uppercase;
+      vertical-align: .08em;
+    }
+    .label.booked { background: var(--gold); color: var(--gold-ink); }
+    .label.option { background: var(--blue); color: var(--blue-ink); }
+    .label.closed { background: var(--red); color: var(--red-ink); }
+
+    .card-grid { display: grid; gap: 12px; }
+    .info-card {
+      padding: 19px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+    .info-card h3 { margin-bottom: 12px; font-size: 1.22rem; }
+    .stay-list, .booking-list { display: grid; gap: 10px; }
+    .stay, .booking {
+      display: grid;
+      gap: 3px;
+      padding: 13px 0 0;
+      border-top: 1px solid var(--line);
+    }
+    .stay:first-child, .booking:first-child { padding-top: 0; border-top: 0; }
+    .stay-head, .booking-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 5px 12px; }
+    .stay-head strong, .booking-head strong { font-size: .96rem; }
+    .stay-head span, .booking-head span { color: var(--muted); font-size: .78rem; font-weight: 750; }
+    .stay address, .booking p { margin: 0; color: var(--muted); font-size: .9rem; font-style: normal; }
+    .map-link { width: max-content; margin-top: 5px; font-size: .84rem; font-weight: 800; }
+
+    .safety {
+      padding: 21px;
+      border: 1px solid #e2bcad;
+      border-radius: var(--radius);
+      background: #fff9f5;
+    }
+    .safety h2 { margin-bottom: 8px; color: #6f3124; }
+    .safety-intro { color: #684d45; }
+    .safety-links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 15px 0 19px; }
+    .safety-links a {
+      display: flex;
+      align-items: center;
+      min-height: 50px;
+      padding: 10px 12px;
+      border: 1px solid #e5cfc6;
+      border-radius: 13px;
+      background: var(--white);
+      color: #713627;
+      font-size: .84rem;
+      font-weight: 850;
+      text-decoration: none;
+    }
+    .trigger-list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+    .trigger-list li { margin: 0; padding: 12px 13px; border-radius: 13px; background: var(--white); font-size: .92rem; }
+
+    details.more-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+    }
+    .more-card + .more-card { margin-top: 10px; }
+    .more-card > summary {
+      display: flex;
+      min-height: 60px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 16px;
+      list-style: none;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    .more-card > summary::-webkit-details-marker { display: none; }
+    .more-card > summary::after { content: "+"; color: var(--pine-700); font-size: 1.35rem; }
+    .more-card[open] > summary::after { content: "−"; }
+    .more-content { padding: 0 17px 18px; color: #354b48; }
+    .more-content h4 { margin: 18px 0 8px; font-size: .95rem; }
+    .more-content h4:first-child { margin-top: 0; }
+
+    footer {
+      margin-top: 36px;
+      padding: 20px 3px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    @media (min-width: 760px) {
+      .hero { padding-top: 64px; padding-bottom: 58px; }
+      main { padding-top: 34px; }
+      .today-card { grid-template-columns: minmax(0, 1.4fr) minmax(300px, .8fr); padding: 30px; }
+      .today-actions { grid-column: 1 / -1; }
+      .quick-grid { grid-template-columns: repeat(3, 1fr); }
+      .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .card-grid .wide { grid-column: 1 / -1; }
+      .safety-links { grid-template-columns: repeat(4, 1fr); }
+      .day-card > summary { padding: 17px 20px; }
+      .day-content { padding-right: 24px; padding-left: 99px; }
+    }
+
+    @media (max-width: 520px) {
+      .hero { padding-top: 34px; }
+      .hero-meta span:last-child { display: none; }
+      .quick-grid { grid-template-columns: 1fr; }
+      .quick-link { min-height: 60px; }
+      .today-card { padding: 20px; }
+      .today-facts { grid-template-columns: 1fr; }
+      .day-card > summary { grid-template-columns: 54px minmax(0, 1fr) 18px; gap: 10px; padding: 13px 12px; }
+      .calendar-tile { min-height: 54px; }
+      .day-content { padding: 0 14px 17px; }
+      .safety-links { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+
+    @media print {
+      :root { --paper: #fff; --card: #fff; }
+      .main-nav, .day-tabs, .today-actions, .quick-grid, .map-link { display: none !important; }
+      .hero { padding: 24px; background: #fff; color: #000; }
+      .hero-copy, .eyebrow { color: #333; }
+      main { width: 100%; padding: 0 20px; }
+      .today-card { background: #fff; color: #000; box-shadow: none; }
+      .today-card p, .today-kicker, .today-fact span { color: #333; }
+      .day-card, .info-card, .safety, .more-card { break-inside: avoid; box-shadow: none; }
+      .day-card > .day-content, .more-card > .more-content { display: block !important; }
+    }
   </style>
 </head>
 <body>
-  <header><h1>Banff Trip Plan</h1><p class="subtitle">July 28–August 6, 2026 · 4 travelers · Canmore, Banff, Jasper, Lake Louise, Yoho &amp; Calgary</p></header>
-  <main>
-    <section class="notice"><h2>How to use this plan</h2><p>Flights, lodging, tours, and restaurant reservations are fixed anchors. Each day has one practical focus—do not try to fit in every idea. Check AQHI, weather, Parks Canada notices, and road conditions before leaving.</p></section>
-    <section class="grid">
-      <div class="card"><h2>Confirmed bookings</h2><table><tbody>
-        <tr><th>Jul 28</th><td>WestJet 1621, DTW → YYC, 6:10–8:15 p.m.</td></tr><tr><th>Jul 29</th><td>Murrieta’s, Canmore, 7:00 p.m. <span class="tag">Cancellable</span></td></tr><tr><th>Jul 30</th><td>Moraine Lake / Lake Louise tour, 7:15 a.m., Banff Train Station <span class="tag">Booked</span></td></tr><tr><th>Jul 31</th><td>Lupo Italian, Banff, 5:00 p.m. <span class="tag">Cancellable</span></td></tr><tr><th>Aug 4</th><td>Moraine Lake / Lake Louise bus tour, 8:00 a.m., Deer Lodge <span class="tag">Booked</span></td></tr><tr><th>Aug 4</th><td>Whitehorn Bistro, 2:15 p.m. <span class="tag">Conditional</span></td></tr><tr><th>Aug 6</th><td>WestJet 1620, YYC → DTW, 11:00 a.m.–4:40 p.m.</td></tr>
-      </tbody></table></div>
-      <div class="card"><h2>Where we sleep</h2><table><tbody>
-        <tr><th>Jul 28–Aug 1</th><td>Canmore Airbnb<br>379 Spring Creek Drive</td></tr><tr><th>Aug 1–3</th><td>Astoria Hotel, Jasper</td></tr><tr><th>Aug 3–5</th><td>Mountaineer Lodge, Lake Louise</td></tr><tr><th>Aug 5–6</th><td>Holiday Inn &amp; Suites Calgary Airport North</td></tr>
-      </tbody></table></div>
+  <a class="skip-link" href="#main">Skip to trip plan</a>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Our field guide · 4 travelers</p>
+      <h1>The Canadian Rockies</h1>
+      <p class="hero-copy">One clear plan each day, the reservations that set our timing, and the best fallback when conditions change.</p>
+      <div class="hero-meta" aria-label="Trip summary">
+        <span>Jul 28–Aug 6, 2026</span>
+        <span>9 nights</span>
+        <span>Canmore → Jasper → Lake Louise → Calgary</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Trip sections">
+    <a href="#today">Today</a>
+    <a href="#days">All days</a>
+    <a href="#stays">Stays</a>
+    <a href="#bookings">Bookings</a>
+    <a href="#safety">Safety</a>
+    <a href="#more">More</a>
+  </nav>
+
+  <main id="main">
+    <!--
+      CONTENT MODEL (source: Banff Trip Plan.md)
+      Hero = title/introduction; day cards = Day by Day; stays/bookings = Confirmed Bookings;
+      safety = Fire, Smoke & Warning Information + Before Each Day; more = Human Decisions,
+      Departure Snapshot, and View-Oriented Restaurant Options. Presentation behavior is additive.
+    -->
+    <section id="today" aria-labelledby="today-title">
+      <div class="today-card">
+        <div>
+          <p class="today-kicker" id="today-kicker">Next up</p>
+          <h2 id="today-title">Tuesday · Arrival in Canmore</h2>
+          <p id="today-summary">Land at YYC, collect the rental car, and drive to the Canmore Airbnb.</p>
+        </div>
+        <div class="today-facts">
+          <div class="today-fact"><span>Key time</span><strong id="today-time">8:15 p.m. landing</strong></div>
+          <div class="today-fact"><span>Sleep</span><strong id="today-sleep">Canmore</strong></div>
+        </div>
+        <div class="today-actions">
+          <button class="button" id="open-current" type="button">Open Jul 28 plan</button>
+          <button class="button secondary" id="share-plan" type="button">Share this plan</button>
+          <span class="share-status" id="share-status" role="status" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <div class="quick-grid" aria-label="Quick links">
+        <a class="quick-link" href="#safety"><small>Before leaving</small><strong>Check smoke, roads &amp; closures</strong></a>
+        <a class="quick-link" href="#stays"><small>Need the address?</small><strong>Open stays &amp; maps</strong></a>
+        <a class="quick-link" href="#bookings"><small>What time is it?</small><strong>See confirmed bookings</strong></a>
+      </div>
+
+      <aside class="decision-banner" aria-label="Pre-trip action">
+        <h3>One action before departure</h3>
+        <p>Record the cancellation deadlines for Murrieta’s, Bridget Bar, and Lupo; explicitly retain or cancel each by its deadline.</p>
+      </aside>
     </section>
-    <section class="notice checks"><h2>Human decisions &amp; actions</h2><h3>Do before departure</h3><ul><li><strong>Arrival / Jul 30 tour:</strong> Confirm rental-car counter hours, Airbnb late-arrival procedure, and the Jul 30 tour’s check-in and parking requirement; tell the group the required Canmore departure time.</li><li><strong>Aug 2 Maligne Lake:</strong> Book an available morning or early-afternoon Spirit Island cruise, or explicitly choose the no-cruise Jasper plan.</li><li><strong>Aug 4 Whitehorn:</strong> Confirm bus-tour duration, Lake Louise dwell time, return/drop-off point, and transfer margin. Keep Whitehorn only if the separate gondola ticket and arrival are realistic; otherwise cancel by its deadline.</li><li><strong>Dining:</strong> Record cancellation deadlines for Murrieta’s, Lupo, and Whitehorn; explicitly retain or cancel each by its deadline.</li></ul><h3>Decide on the day</h3><ul><li><strong>Jul 30:</strong> Choose one low-effort Banff stop after the tour: Bow Falls + Surprise Corner, Cave and Basin, or Banff town.</li><li><strong>Jul 31:</strong> Keep Johnston Canyon, then choose at most one compact Banff afternoon option.</li><li><strong>Aug 1 / Aug 3:</strong> Pick up to four northbound Parkway stops; use the southbound drive for only one to three missed stops.</li><li><strong>Aug 2:</strong> After choosing cruise or no-cruise, select one compatible Jasper fallback and no more than one evening addition; use the Planetarium in smoke.</li><li><strong>Aug 5:</strong> Use the full Yoho sequence only with an early start, open road, and feasible parking; otherwise use the shorter route or go directly to Calgary.</li></ul><h3>Repeat before each outing</h3><p>Check AQHI/wildfire notices, weather, Parks Canada road and trail notices, Alberta 511, and shuttle status. Choose a primary activity and indoor/low-exertion fallback; never use a closed area as an alternative.</p></section>
-    <section class="days">
-      <article class="day"><div class="date">Tue<span>Jul 28</span></div><div><h2>Arrival in Canmore</h2><p class="anchor"><strong>Anchor:</strong> Land at YYC at 8:15 p.m.; rental car; late drive and check-in at the Canmore Airbnb.</p><ul><li>Confirm late check-in and rental-car details before departure.</li><li>Carry a snack; do not depend on an arrival grocery or restaurant stop.</li></ul></div></article>
-      <article class="day"><div class="date">Wed<span>Jul 29</span></div><div><h2>Canmore recovery day</h2><p class="anchor"><strong>Dinner:</strong> Murrieta’s, Canmore, 7:00 p.m. <span class="tag">Cancellable</span></p><ul><li>Slow morning; Policeman’s Creek and Bow River paths are the main easy outing.</li><li>Use Canmore town, cafés, galleries, or Quarry Lake as a lighter substitute.</li><li><strong>Closed:</strong> Do not plan Grassi Lakes or Highway 742 as a through route.</li></ul></div></article>
-      <article class="day"><div class="date">Thu<span>Jul 30</span></div><div><h2>Moraine Lake, Lake Louise &amp; Banff</h2><p class="anchor"><strong>Booked:</strong> 7:15 a.m. lake tour from Banff Train Station; allow 5.5 hours.</p><ul><li>Prioritize Moraine Lake Rockpile and short shoreline walks, then Lake Louise lakeshore.</li><li>Afterward choose one: Bow Falls + Surprise Corner, Cave and Basin, or Banff town.</li><li>Keep this a light day—do not add a gondola, Tunnel Mountain, Lake Minnewanka, or horseback riding.</li></ul></div></article>
-      <article class="day"><div class="date">Fri<span>Jul 31</span></div><div><h2>Johnston Canyon &amp; Banff</h2><p class="anchor"><strong>Dinner:</strong> Lupo Italian, Banff, 5:00 p.m. <span class="tag">Cancellable</span></p><ul><li>Leave Canmore around 6:30 a.m.; aim for Johnston Canyon around 7:15.</li><li>Walk to Lower Falls; continue to Upper Falls only if everyone feels good.</li><li>Stay in Banff until dinner. Choose one afternoon stop or a rest—not a long list.</li></ul></div></article>
-      <article class="day"><div class="date">Sat<span>Aug 1</span></div><div><h2>Canmore to Jasper via Icefields Parkway</h2><p class="anchor"><strong>Transfer day:</strong> Check out, drive north, and check in at Astoria Hotel.</p><ul><li>Start with fuel, water, lunch, and a Highway 93 status check.</li><li>Choose up to four: Bow Lake, Peyto Lake, Mistaya Canyon, Columbia Icefield, Sunwapta Falls, Athabasca Falls.</li><li><strong>Current restriction (checked Jul 26):</strong> Peyto Pit Road is closed through Aug 15. Use only the official public access for any Peyto Lake stop; do not use the closed road. Skip Peyto Lake if access is unclear on the day.</li><li>Save any overflow for the August 3 southbound drive.</li></ul></div></article>
-      <article class="day"><div class="date">Sun<span>Aug 2</span></div><div><h2>Jasper &amp; Maligne Valley</h2><p class="anchor"><strong>Pending:</strong> Decide whether to book a Maligne Lake cruise to Spirit Island.</p><ul><li>If cruising: go directly to check-in, then Medicine Lake on the return; choose one evening lake cluster.</li><li>Without a cruise: Maligne Valley and Jasper town. Jasper Planetarium is the strongest smoky-day option.</li><li><strong>Closed:</strong> Maligne Canyon and Cavell Road are unavailable for 2026.</li></ul></div></article>
-      <article class="day"><div class="date">Mon<span>Aug 3</span></div><div><h2>Jasper to Lake Louise</h2><p class="anchor"><strong>Transfer day:</strong> Check out, drive south, and check in at Mountaineer Lodge.</p><ul><li>Use the southbound drive for up to three missed Parkway stops.</li><li>Arrive rested; keep Lake Louise dinner simple and local.</li></ul></div></article>
-      <article class="day"><div class="date">Tue<span>Aug 4</span></div><div><h2>Booked Moraine Lake / Lake Louise bus tour</h2><p class="anchor"><strong>Booked:</strong> 8:00 a.m. Deer Lodge pickup; Moraine Lake first, then Lake Louise.</p><ul><li>Prioritize Rockpile and brief shore walk, then Lake Louise lakeshore. Fairview Lookout only if time allows.</li><li><strong>Whitehorn is conditional:</strong> it needs a separate Summer Gondola ticket and enough margin after the tour. Confirm timing before retaining 2:15 p.m. lunch.</li><li>Plain of Six Glaciers does not fit this organized-tour day.</li></ul></div></article>
-      <article class="day"><div class="date">Wed<span>Aug 5</span></div><div><h2>Yoho to Calgary</h2><p class="anchor"><strong>Transfer day:</strong> Check out, see Yoho if conditions allow, and reach the Calgary airport hotel.</p><ul><li>Early start: Emerald Lake, Natural Bridge, then Takakkaw Falls if Yoho Valley Road and parking cooperate.</li><li>Short version: Emerald Lake shoreline and Natural Bridge, then Calgary.</li><li><strong>Current status (checked Jul 26):</strong> Yoho fire danger is extreme. Yoho Valley Road is open, but Takakkaw Falls and Emerald Lake parking are limited; Emerald Lakeshore has wet/muddy sections. Recheck fire/smoke and road status before leaving; go directly to Calgary if smoke, visibility, or safety guidance makes sightseeing unsuitable.</li></ul></div></article>
-      <article class="day"><div class="date">Thu<span>Aug 6</span></div><div><h2>Fly home</h2><p class="anchor"><strong>Anchor:</strong> Reach YYC about 8:00 a.m., return the rental car, and fly at 11:00 a.m.</p></div></article>
+
+    <section id="days" aria-labelledby="days-title">
+      <div class="section-heading">
+        <h2 id="days-title">Day by day</h2>
+        <p>Tap a day for the full plan. Gold is booked; blue is a choice or fallback; red marks a restriction.</p>
+      </div>
+
+      <div class="day-tabs" aria-label="Jump to a day">
+        <button class="day-tab" type="button" data-target="day-2026-07-28"><span>Tue</span><strong>28</strong></button>
+        <button class="day-tab" type="button" data-target="day-2026-07-29"><span>Wed</span><strong>29</strong></button>
+        <button class="day-tab" type="button" data-target="day-2026-07-30"><span>Thu</span><strong>30</strong></button>
+        <button class="day-tab" type="button" data-target="day-2026-07-31"><span>Fri</span><strong>31</strong></button>
+        <button class="day-tab" type="button" data-target="day-2026-08-01"><span>Sat</span><strong>1</strong></button>
+        <button class="day-tab" type="button" data-target="day-2026-08-02"><span>Sun</span><strong>2</strong></button>
+        <button class="day-tab" type="button" data-target="day-2026-08-03"><span>Mon</span><strong>3</strong></button>
+        <button class="day-tab" type="button" data-target="day-2026-08-04"><span>Tue</span><strong>4</strong></button>
+        <button class="day-tab" type="button" data-target="day-2026-08-05"><span>Wed</span><strong>5</strong></button>
+        <button class="day-tab" type="button" data-target="day-2026-08-06"><span>Thu</span><strong>6</strong></button>
+      </div>
+
+      <div class="days">
+        <details class="day-card" id="day-2026-07-28" data-date="2026-07-28" data-day="Tuesday" data-title="Arrival in Canmore" data-summary="Land at YYC, collect the rental car, and drive to the Canmore Airbnb." data-time="8:15 p.m. landing" data-sleep="Canmore">
+          <summary>
+            <span class="calendar-tile"><span>Jul</span><strong>28</strong></span>
+            <span class="summary-copy"><strong class="day-title">Arrival in Canmore</strong><span class="summary-meta"><span>Tuesday</span><span class="time">8:15 p.m. land</span><span>Sleep: Canmore</span></span></span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="day-content">
+            <p class="callout booked"><strong>Fixed anchor:</strong> WestJet 1621 lands at YYC at 8:15 p.m.; collect the confirmed rental car and drive to the Canmore Airbnb.</p>
+            <ul class="day-list">
+              <li>Use the Airbnb’s known late-arrival procedure.</li>
+              <li>Eat en route or carry an arrival snack; do not count on stores or restaurants being open.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="day-card" id="day-2026-07-29" data-date="2026-07-29" data-day="Wednesday" data-title="Canmore recovery day" data-summary="Keep it easy around Policeman’s Creek and the Bow River; dinner is in Canmore." data-time="7:00 p.m. dinner" data-sleep="Canmore">
+          <summary>
+            <span class="calendar-tile"><span>Jul</span><strong>29</strong></span>
+            <span class="summary-copy"><strong class="day-title">Canmore recovery day</strong><span class="summary-meta"><span>Wednesday</span><span class="time">7:00 p.m. dinner</span><span>Sleep: Canmore</span></span></span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="day-content">
+            <p class="callout booked"><span class="label booked">Cancellable</span><strong>Dinner:</strong> Murrieta’s, Canmore, 7:00 p.m.</p>
+            <p class="callout"><strong>Primary plan:</strong> Slow morning, then Policeman’s Creek and the Bow River paths. Keep the afternoon easy.</p>
+            <ul class="day-list">
+              <li><span class="label option">Substitute</span>Canmore town, cafés, galleries, or a short Quarry Lake stop.</li>
+              <li><span class="label option">Clear air only</span>Sunshine Meadows is a full-day substitute—not an add-on—after confirming lift/transport, trail conditions, and smoke.</li>
+              <li><span class="label closed">Closed</span>Do not plan Grassi Lakes or Highway 742 as a through route.</li>
+              <li><strong>Tomorrow:</strong> Allow enough time to reach the Banff Gondola for the booked 8:30 a.m. entry.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="day-card" id="day-2026-07-30" data-date="2026-07-30" data-day="Thursday" data-title="Banff Gondola &amp; breakfast" data-summary="The gondola, summit breakfast, and Bridget Bar set today’s timing." data-time="8:30 a.m. entry" data-sleep="Canmore">
+          <summary>
+            <span class="calendar-tile"><span>Jul</span><strong>30</strong></span>
+            <span class="summary-copy"><strong class="day-title">Banff Gondola &amp; breakfast</strong><span class="summary-meta"><span>Thursday</span><span class="time">8:30 a.m. entry</span><span>Sleep: Canmore</span></span></span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="day-content">
+            <p class="callout booked"><span class="label booked">Booked</span>Gondola entry 8:30 a.m. · Northern Lights Alpine Kitchen breakfast 9:00 a.m. · descend 11:30 a.m. · Bridget Bar dinner 7:15 p.m.</p>
+            <ul class="day-list">
+              <li>Explore the summit boardwalk and viewpoints at an easy pace around breakfast, subject to weather and visibility.</li>
+              <li><span class="label option">Choose one</span>After descending: Bow Falls + Surprise Corner, Cave and Basin, or Banff town. Then return to Canmore.</li>
+              <li>Keep enough margin to park and arrive at Bridget Bar unhurried.</li>
+              <li><strong>Do not stack:</strong> Lake Louise/Moraine Lake, Tunnel Mountain, Lake Minnewanka, horseback riding, or a longer hike.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="day-card" id="day-2026-07-31" data-date="2026-07-31" data-day="Friday" data-title="Johnston Canyon &amp; Banff" data-summary="Start early for Lower Falls, then choose one compact Banff afternoon before dinner." data-time="6:30 a.m. leave" data-sleep="Canmore">
+          <summary>
+            <span class="calendar-tile"><span>Jul</span><strong>31</strong></span>
+            <span class="summary-copy"><strong class="day-title">Johnston Canyon &amp; Banff</strong><span class="summary-meta"><span>Friday</span><span class="time">6:30 a.m. leave</span><span>Sleep: Canmore</span></span></span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="day-content">
+            <p class="callout booked"><span class="label booked">Cancellable</span><strong>Dinner:</strong> Lupo Italian, Banff, 5:00 p.m.</p>
+            <p class="callout"><strong>Primary plan:</strong> Leave Canmore around 6:30 a.m.; aim to start Johnston Canyon around 7:15. Walk to Lower Falls; continue to Upper Falls only if everyone feels good and conditions are clear.</p>
+            <ul class="day-list">
+              <li>Stay in Banff after the canyon—do not make an unnecessary Canmore round trip before dinner.</li>
+              <li><span class="label option">Choose one</span>Banff town, Cave and Basin, Bow Falls + Surprise Corner, Lake Minnewanka scenic loop, Tunnel Mountain Trail, or rest. Tunnel Mountain only after Lower Falls and only if everyone wants the climb. Do not combine it with Lake Minnewanka.</li>
+              <li>Upper Hot Springs can work after dinner if energy allows.</li>
+              <li><strong>Alternatives, not add-ons:</strong> Banff Gondola, Sunshine Meadows, horseback riding, and Kootenay.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="day-card" id="day-2026-08-01" data-date="2026-08-01" data-day="Saturday" data-title="Canmore to Jasper" data-summary="Drive the Icefields Parkway with two priority stops and a few condition-dependent options." data-time="6:30–7:00 a.m. leave" data-sleep="Jasper">
+          <summary>
+            <span class="calendar-tile"><span>Aug</span><strong>1</strong></span>
+            <span class="summary-copy"><strong class="day-title">Canmore to Jasper</strong><span class="summary-meta"><span>Saturday</span><span class="time">6:30–7:00 a.m. leave</span><span>Sleep: Jasper</span></span></span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="day-content">
+            <p class="callout booked"><strong>Fixed anchor:</strong> Check out of Canmore, drive north, and check in at the Astoria Hotel in Jasper.</p>
+            <p class="callout"><strong>Primary plan:</strong> Start with a full tank, packed lunch, water, and a Highway 93 check. Prioritize the Columbia Icefield / Athabasca Glacier viewpoint (view only; no glacier walk or climb) and Athabasca Falls.</p>
+            <ul class="day-list">
+              <li><span class="label option">If time allows</span>Bow Lake, Peyto Lake, Mistaya Canyon, or Sunwapta Falls. Choose up to four main stops total; save overflow for Aug 3.</li>
+              <li><span class="label closed">Restriction · checked Jul 26</span>Peyto Pit Road is closed through Aug 15. Use only official public access and skip Peyto Lake if access is unclear.</li>
+              <li>Arrive in Jasper before dinner.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="day-card" id="day-2026-08-02" data-date="2026-08-02" data-day="Sunday" data-title="Jasper &amp; Maligne Valley" data-summary="Drive the Maligne Valley and return with ample time for the booked evening wildlife tour." data-time="7:30 p.m. tour" data-sleep="Jasper">
+          <summary>
+            <span class="calendar-tile"><span>Aug</span><strong>2</strong></span>
+            <span class="summary-copy"><strong class="day-title">Jasper &amp; Maligne Valley</strong><span class="summary-meta"><span>Sunday</span><span class="time">7:30 p.m. tour</span><span>Sleep: Jasper</span></span></span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="day-content">
+            <p class="callout booked"><span class="label booked">Booked</span><strong>Evening anchor:</strong> Jasper National Park evening wildlife tour at 7:30 p.m. Use the confirmation for pickup/check-in; be back, ready, and dressed for conditions well beforehand.</p>
+            <p class="callout"><strong>Selected plan—no cruise:</strong> Drive the Maligne Valley, visit Medicine Lake and the Maligne Lake lakeshore, then return to Jasper with ample time for the tour. Do not count on walk-up cruise availability.</p>
+            <ul class="day-list">
+              <li><span class="label option">Only with ample time</span>A brief Pyramid and Patricia Lakes circuit. Skip it if it squeezes dinner or tour preparation.</li>
+              <li><span class="label option">Smoke fallback</span>Jasper town plus the indoor Jasper Planetarium, then return for the tour.</li>
+              <li><span class="label closed">Closed</span>Maligne Canyon and Cavell Road are unavailable for the 2026 season.</li>
+              <li>SkyTram, dark-sky programs, and Mount Robson remain unbooked substitutes—not additions.</li>
+              <li>Try for stars during the wildlife-tour window only if conditions and the operator allow; no separate late-night drive.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="day-card" id="day-2026-08-03" data-date="2026-08-03" data-day="Monday" data-title="Jasper to Lake Louise" data-summary="Drive south and use the route for up to three missed Parkway stops." data-time="About 8:00 a.m. leave" data-sleep="Lake Louise">
+          <summary>
+            <span class="calendar-tile"><span>Aug</span><strong>3</strong></span>
+            <span class="summary-copy"><strong class="day-title">Jasper to Lake Louise</strong><span class="summary-meta"><span>Monday</span><span class="time">About 8:00 a.m. leave</span><span>Sleep: Lake Louise</span></span></span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="day-content">
+            <p class="callout booked"><strong>Fixed anchor:</strong> Check out of Jasper, drive south, and check in at Mountaineer Lodge in the late afternoon.</p>
+            <ul class="day-list">
+              <li>Use the drive for up to three missed stops: Athabasca Falls, the Columbia Icefield glacier viewpoint (view only; no climb), or one Banff-side stop—not every missed attraction.</li>
+              <li>Keep dinner easy and close to the lodge.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="day-card" id="day-2026-08-04" data-date="2026-08-04" data-day="Tuesday" data-title="Moraine Lake &amp; Lake Louise" data-summary="The booked bus tour visits Moraine Lake first, then Lake Louise." data-time="8:00 a.m. pickup" data-sleep="Lake Louise">
+          <summary>
+            <span class="calendar-tile"><span>Aug</span><strong>4</strong></span>
+            <span class="summary-copy"><strong class="day-title">Moraine Lake &amp; Lake Louise</strong><span class="summary-meta"><span>Tuesday</span><span class="time">8:00 a.m. pickup</span><span>Sleep: Lake Louise</span></span></span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="day-content">
+            <p class="callout booked"><span class="label booked">Booked</span><strong>Bus tour:</strong> 8:00 a.m. pickup at Deer Lodge; Moraine Lake first, then Lake Louise.</p>
+            <ul class="day-list">
+              <li>Prioritize the Rockpile and a short shore walk at Moraine Lake, then the Lake Louise lakeshore.</li>
+              <li>Fairview Lookout only fits if the operator’s dwell time allows.</li>
+              <li>Whitehorn Bistro is cancelled. Do not add the Lake Louise Summer Gondola.</li>
+              <li>Plain of Six Glaciers does not fit this organized-tour day.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="day-card" id="day-2026-08-05" data-date="2026-08-05" data-day="Wednesday" data-title="Yoho to Calgary" data-summary="Use the full Yoho sequence only if the road, parking, smoke, and timing cooperate." data-time="6:30–6:45 a.m. leave" data-sleep="Calgary">
+          <summary>
+            <span class="calendar-tile"><span>Aug</span><strong>5</strong></span>
+            <span class="summary-copy"><strong class="day-title">Yoho to Calgary</strong><span class="summary-meta"><span>Wednesday</span><span class="time">6:30–6:45 a.m. leave</span><span>Sleep: Calgary</span></span></span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="day-content">
+            <p class="callout booked"><strong>Fixed anchor:</strong> Check out, see Yoho if conditions allow, and reach the Calgary airport hotel.</p>
+            <p class="callout"><strong>Primary plan:</strong> Emerald Lake, Natural Bridge, then Takakkaw Falls if Yoho Valley Road is open and parking works. Arrive early for Takakkaw Falls; skip it if the schedule slips.</p>
+            <ul class="day-list">
+              <li><span class="label option">Lighter plan</span>Emerald Lake shoreline and Natural Bridge, then Calgary.</li>
+              <li><span class="label closed">Status · checked Jul 27</span>Yoho fire danger is high. Yoho Valley Road is open; parking is limited at Takakkaw Falls and Emerald Lake. If a lot is full, do not wait or circle. Use the shorter route, or go directly to Calgary if smoke, visibility, safety guidance, or fatigue makes sightseeing unsuitable.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="day-card" id="day-2026-08-06" data-date="2026-08-06" data-day="Thursday" data-title="Fly home" data-summary="Return the rental car and fly from Calgary to Detroit." data-time="8:00 a.m. reach YYC" data-sleep="Home">
+          <summary>
+            <span class="calendar-tile"><span>Aug</span><strong>6</strong></span>
+            <span class="summary-copy"><strong class="day-title">Fly home</strong><span class="summary-meta"><span>Thursday</span><span class="time">8:00 a.m. reach YYC</span><span>Fly to Detroit</span></span></span>
+            <span class="chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="day-content">
+            <p class="callout booked"><strong>Fixed anchor:</strong> Leave the airport hotel in time to reach YYC around 8:00 a.m., return the rental car, and check in for WestJet 1620 at 11:00 a.m. Arrival in Detroit is 4:40 p.m.</p>
+          </div>
+        </details>
+      </div>
     </section>
-    <section class="notice checks"><h2>Daily safety check</h2><ol><li>Check Environment Canada weather and AQHI.</li><li>Check Parks Canada bulletins/trail conditions and Alberta 511 road conditions.</li><li>Pick one outdoor objective and one low-exertion fallback.</li><li>If AQHI is 7 or higher, visibility is poor, or anyone has smoke symptoms, skip hikes and long viewpoints; favor driving, indoor time, meals, and rest.</li><li>Never enter closed areas or route around a closure.</li></ol><h3>Departure snapshot — checked Jul 26</h3><ul><li><strong>Jul 28–29 Canmore:</strong> the current forecast is sunny and warm (about 28°C Jul 28 and 27°C Jul 29), but recent wildfire smoke means AQHI and visibility still control the plan. If the smoke trigger applies, make Jul 29 a cafés/galleries/rest day.</li><li><strong>Known constraints:</strong> Peyto Pit Road is closed through Aug 15; Maligne Canyon and the Edith Cavell Road/area are closed; Yoho Valley Road is open, but Takakkaw Falls and Emerald Lake parking are limited. Recheck on the relevant morning.</li><li><strong>Jasper and Yoho:</strong> these days are outside the useful short-range forecast window; retain the day-of primary and fallback choices.</li></ul></section>
-    <footer>Live plan: <a href="Banff%20Trip%20Plan.md">Banff Trip Plan.md</a> · Supporting source material: <a href="reference/">reference/</a>. Operational details must be reconfirmed shortly before use.</footer>
+
+    <section id="stays" aria-labelledby="stays-title">
+      <div class="section-heading">
+        <h2 id="stays-title">Where we sleep</h2>
+        <p>Fixed lodging anchors, with one-tap map searches for arrival.</p>
+      </div>
+      <div class="card-grid">
+        <article class="info-card">
+          <h3>Canmore &amp; Jasper</h3>
+          <div class="stay-list">
+            <div class="stay">
+              <div class="stay-head"><strong>Canmore Airbnb</strong><span>Jul 28–Aug 1</span></div>
+              <address>379 Spring Creek Drive, Canmore</address>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=379%20Spring%20Creek%20Drive%20Canmore" rel="noopener">Open in maps ↗</a>
+            </div>
+            <div class="stay">
+              <div class="stay-head"><strong>Astoria Hotel</strong><span>Aug 1–3</span></div>
+              <address>404 Connaught Drive, Jasper</address>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Astoria%20Hotel%20404%20Connaught%20Drive%20Jasper" rel="noopener">Open in maps ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="info-card">
+          <h3>Lake Louise &amp; Calgary</h3>
+          <div class="stay-list">
+            <div class="stay">
+              <div class="stay-head"><strong>Mountaineer Lodge</strong><span>Aug 3–5</span></div>
+              <address>101 Village Road, Lake Louise</address>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Mountaineer%20Lodge%20101%20Village%20Road%20Lake%20Louise" rel="noopener">Open in maps ↗</a>
+            </div>
+            <div class="stay">
+              <div class="stay-head"><strong>Holiday Inn &amp; Suites Calgary Airport North</strong><span>Aug 5–6</span></div>
+              <address>20 Freeport Place NE, Calgary</address>
+              <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Holiday%20Inn%20Suites%20Calgary%20Airport%20North%2020%20Freeport%20Place%20NE" rel="noopener">Open in maps ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="bookings" aria-labelledby="bookings-title">
+      <div class="section-heading">
+        <h2 id="bookings-title">Confirmed bookings</h2>
+        <p>These are facts. Restaurant reservations are confirmed but adjustable; tours remain booked unless we choose otherwise.</p>
+      </div>
+      <div class="card-grid">
+        <article class="info-card">
+          <h3>Flights &amp; transport</h3>
+          <div class="booking-list">
+            <div class="booking"><div class="booking-head"><strong>WestJet 1621 · DTW → YYC</strong><span>Jul 28</span></div><p>6:10–8:15 p.m.</p></div>
+            <div class="booking"><div class="booking-head"><strong>Rental car</strong><span>Jul 28–Aug 6</span></div><p><span class="label booked">Confirmed</span></p></div>
+            <div class="booking"><div class="booking-head"><strong>WestJet 1620 · YYC → DTW</strong><span>Aug 6</span></div><p>11:00 a.m.–4:40 p.m.</p></div>
+          </div>
+        </article>
+        <article class="info-card">
+          <h3>Tours &amp; timed activities</h3>
+          <div class="booking-list">
+            <div class="booking"><div class="booking-head"><strong>Banff Gondola</strong><span>Jul 30</span></div><p>8:30 a.m. entry</p></div>
+            <div class="booking"><div class="booking-head"><strong>Northern Lights breakfast</strong><span>Jul 30</span></div><p>9:00 a.m.; descend 11:30 a.m.</p></div>
+            <div class="booking"><div class="booking-head"><strong>Jasper wildlife tour</strong><span>Aug 2</span></div><p>7:30 p.m.; use confirmation for pickup/check-in</p></div>
+            <div class="booking"><div class="booking-head"><strong>Moraine Lake / Lake Louise bus</strong><span>Aug 4</span></div><p>8:00 a.m. Deer Lodge pickup; Moraine Lake first</p></div>
+          </div>
+        </article>
+        <article class="info-card wide">
+          <h3>Restaurants</h3>
+          <div class="booking-list">
+            <div class="booking"><div class="booking-head"><strong>Murrieta’s · Canmore</strong><span>Jul 29 · 7:00 p.m.</span></div><p><span class="label option">Cancellable</span></p></div>
+            <div class="booking"><div class="booking-head"><strong>Bridget Bar · Banff</strong><span>Jul 30 · 7:15 p.m.</span></div><p><span class="label booked">Booked</span></p></div>
+            <div class="booking"><div class="booking-head"><strong>Lupo Italian · Banff</strong><span>Jul 31 · 5:00 p.m.</span></div><p><span class="label option">Cancellable</span></p></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="safety" class="safety" aria-labelledby="safety-title">
+      <h2 id="safety-title">Check before every outing</h2>
+      <p class="safety-intro">Weather, smoke, closures, roads, and trail conditions decide which listed option is practical. They do not change the fixed flights, stays, or rental car.</p>
+      <div class="safety-links" aria-label="Official condition sources">
+        <a href="https://parks.canada.ca/fire-alerts" rel="noopener">Parks Canada fire alerts ↗</a>
+        <a href="https://www.alberta.ca/wildfire-status" rel="noopener">Alberta wildfire status ↗</a>
+        <a href="https://www.alberta.ca/emergencyalert" rel="noopener">Emergency alerts ↗</a>
+        <a href="https://511.alberta.ca/map/" rel="noopener">Alberta 511 roads ↗</a>
+      </div>
+      <ol>
+        <li>Check the next location’s Environment Canada forecast and AQHI.</li>
+        <li>Check Parks Canada bulletins and trail conditions, Alberta 511, and shuttle status.</li>
+        <li>Choose one primary outdoor objective and one indoor or low-exertion fallback.</li>
+      </ol>
+      <ul class="trigger-list">
+        <li><strong>Emergency alert, evacuation order, or closure:</strong> stop the affected plan and follow instructions. Never drive toward it or route around it.</li>
+        <li><strong>AQHI 7+, poor visibility, or smoke symptoms:</strong> skip hikes, gondola viewpoints, and long scenic stops. Favor nearby indoor/low-exertion time, meals, driving, or rest.</li>
+        <li><strong>Fire bans:</strong> check the specific park or accommodation rule before using any flame, firepit, charcoal grill, or stove.</li>
+        <li><strong>Wildlife tour:</strong> the operator’s weather/smoke decision controls the Aug 2 tour. Keep their message and contact details available.</li>
+      </ul>
+    </section>
+
+    <section id="more" aria-labelledby="more-title">
+      <div class="section-heading">
+        <h2 id="more-title">More useful context</h2>
+        <p>Day-of decisions, the departure snapshot, and unbooked meal ideas—available without crowding the daily plan.</p>
+      </div>
+
+      <details class="more-card">
+        <summary>Decide on the day</summary>
+        <div class="more-content">
+          <ul>
+            <li><strong>Jul 30:</strong> After gondola breakfast and descent, choose exactly one low-effort Banff stop. Be at Bridget Bar for 7:15 p.m.</li>
+            <li><strong>Jul 31:</strong> Keep Johnston Canyon, then choose at most one compact Banff afternoon option.</li>
+            <li><strong>Aug 1 / Aug 3:</strong> Prioritize the Columbia Icefield glacier viewpoint and Athabasca Falls across the two drives; use Aug 3 for only one to three missed suitable stops.</li>
+            <li><strong>Aug 2:</strong> Follow the selected no-cruise Maligne Valley plan. Pyramid and Patricia Lakes are optional only with ample time. Use the Planetarium in smoke.</li>
+            <li><strong>Aug 5:</strong> Use the full Yoho sequence only with an early start, open road, and feasible parking. Otherwise use the lighter plan or drive directly to Calgary.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="more-card">
+        <summary>Departure snapshot · checked Jul 26–27</summary>
+        <div class="more-content">
+          <ul>
+            <li><strong>Jul 28–29 Canmore:</strong> Forecast is sunny and warm—about 28°C Jul 28 and 27°C Jul 29—but current AQHI and visibility still control the plan. If the smoke trigger applies, use cafés, galleries, and rest on Jul 29.</li>
+            <li><strong>Known constraints:</strong> Peyto Pit Road is closed through Aug 15; Maligne Canyon and the Edith Cavell Road/area are closed; Yoho Valley Road is open, but parking at Takakkaw Falls and Emerald Lake is limited.</li>
+            <li><strong>Jasper and Yoho:</strong> Those days were outside the useful short-range forecast window. Recheck on the relevant morning.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="more-card">
+        <summary>View-oriented restaurant options</summary>
+        <div class="more-content">
+          <p>These are unbooked suggestions, not additions to the plan. Check current hours, availability, weather, and timing before reserving.</p>
+          <ul>
+            <li><strong>Northern Lights Alpine Kitchen · Jul 30:</strong> booked 9:00 a.m. summit breakfast.</li>
+            <li><strong>Bridget Bar · Jul 30:</strong> booked 7:15 p.m. Banff dinner.</li>
+            <li><a href="https://www.banffjaspercollection.com/canadian-rockies/banff/stories/dine-outside-best-patios-in-banff/">Rose &amp; Crown rooftop</a>: casual Banff patio option for Jul 30 or 31.</li>
+            <li><a href="https://www.banffjaspercollection.com/attractions/columbia-icefield/dining/altitude/">Altitude Restaurant</a>: beside the Columbia Icefield; only if Aug 1 or 3 timing allows.</li>
+            <li><a href="https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/dining/">Lake House Café or Maligne Lake Chalet</a>: compatible with Aug 2 only if the daytime plan returns in time for the tour.</li>
+            <li><a href="https://www.fairmont.com/lake-louise/dining/">Lakeview Lounge or Fairview Bar &amp; Restaurant</a>: only if Aug 3 evening or Aug 4 tour timing leaves ample time.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="more-card">
+        <summary>How to use this plan</summary>
+        <div class="more-content">
+          <p>Flights, lodging, and the rental car are fixed anchors. Tours and restaurant reservations are confirmed but adjustable. Choose only the listed primary activity each day, then use conditions, timing, energy, and the group’s preference to select any compatible option.</p>
+        </div>
+      </details>
+    </section>
+
+    <footer>
+      <p><strong>Source of truth:</strong> <a href="Banff%20Trip%20Plan.md">Banff Trip Plan.md</a>. This page adds mobile navigation and presentation features; itinerary facts and labels map back to the Markdown sections. Supporting material remains in <a href="reference/">reference/</a>. Reconfirm operational details shortly before use.</p>
+    </footer>
   </main>
+
+  <script>
+    (() => {
+      const dayCards = [...document.querySelectorAll('.day-card')];
+      const dayTabs = [...document.querySelectorAll('.day-tab')];
+      const dateKey = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      };
+      const parseLocalDate = (value) => {
+        const [year, month, day] = value.split('-').map(Number);
+        return new Date(year, month - 1, day, 12);
+      };
+
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12);
+      const todayKey = dateKey(today);
+      const firstDate = parseLocalDate(dayCards[0].dataset.date);
+      const lastDate = parseLocalDate(dayCards[dayCards.length - 1].dataset.date);
+      const exactIndex = dayCards.findIndex((card) => card.dataset.date === todayKey);
+      const currentIndex = exactIndex >= 0 ? exactIndex : (today < firstDate ? 0 : dayCards.length - 1);
+      const currentCard = dayCards[currentIndex];
+
+      const kicker = document.querySelector('#today-kicker');
+      if (exactIndex >= 0) {
+        kicker.textContent = 'Today’s plan';
+      } else if (today < firstDate) {
+        const daysUntil = Math.round((firstDate - today) / 86400000);
+        kicker.textContent = daysUntil === 1 ? 'Starts tomorrow' : `Starts in ${daysUntil} days`;
+      } else if (today > lastDate) {
+        kicker.textContent = 'Trip complete';
+      }
+
+      document.querySelector('#today-title').textContent = `${currentCard.dataset.day} · ${currentCard.dataset.title}`;
+      document.querySelector('#today-summary').textContent = currentCard.dataset.summary;
+      document.querySelector('#today-time').textContent = currentCard.dataset.time;
+      document.querySelector('#today-sleep').textContent = currentCard.dataset.sleep;
+
+      const currentButton = document.querySelector('#open-current');
+      const currentDate = parseLocalDate(currentCard.dataset.date);
+      currentButton.textContent = `Open ${currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} plan`;
+      currentButton.addEventListener('click', () => {
+        currentCard.open = true;
+        currentCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      dayCards.forEach((card, index) => {
+        const isCurrent = index === currentIndex;
+        card.classList.toggle('is-current', isCurrent);
+        if (exactIndex >= 0 && isCurrent) card.open = true;
+      });
+
+      dayTabs.forEach((tab, index) => {
+        if (index === currentIndex) {
+          tab.setAttribute('aria-current', 'date');
+          requestAnimationFrame(() => {
+            const strip = tab.parentElement;
+            strip.scrollLeft = tab.offsetLeft - (strip.clientWidth - tab.clientWidth) / 2;
+          });
+        }
+        tab.addEventListener('click', () => {
+          const target = document.getElementById(tab.dataset.target);
+          target.open = true;
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      const shareButton = document.querySelector('#share-plan');
+      const shareStatus = document.querySelector('#share-status');
+      shareButton.addEventListener('click', async () => {
+        const shareData = { title: document.title, text: 'Our Canadian Rockies trip plan', url: window.location.href };
+        try {
+          if (navigator.share) {
+            await navigator.share(shareData);
+          } else if (navigator.clipboard) {
+            await navigator.clipboard.writeText(window.location.href);
+            shareStatus.textContent = 'Link copied';
+            setTimeout(() => { shareStatus.textContent = ''; }, 2500);
+          } else {
+            shareStatus.textContent = 'Copy the address from your browser';
+          }
+        } catch (error) {
+          if (error.name !== 'AbortError') shareStatus.textContent = 'Use your browser’s Share button';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
