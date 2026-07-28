@@ -150,7 +150,21 @@
     main { width: min(1120px, calc(100% - 24px)); margin: 0 auto; padding: 24px 0 72px; }
     section { scroll-margin-top: calc(var(--header-offset) + 16px); }
     .section-heading { margin: 42px 2px 16px; }
+    .section-title-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
     .section-heading p { max-width: 690px; margin: 7px 0 0; color: var(--muted); }
+    .section-toggle {
+      flex: 0 0 auto;
+      min-height: 44px;
+      padding: 0 13px;
+      border: 1px solid var(--pine-700);
+      border-radius: 12px;
+      background: var(--card);
+      color: var(--pine-800);
+      font: inherit;
+      font-size: .82rem;
+      font-weight: 850;
+      cursor: pointer;
+    }
 
     .today-card {
       display: grid;
@@ -235,6 +249,27 @@
     .decision-banner h3 { margin-bottom: 0; font-family: inherit; font-size: 1rem; }
     .decision-banner p { margin: 0; color: #594e2c; font-size: .9rem; }
 
+    .activity-key {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 0 0 13px;
+    }
+    .activity-key span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 34px;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+      color: var(--muted);
+      font-size: .74rem;
+      font-weight: 800;
+    }
+    .item-icon { display: inline-block; margin-right: .3rem; font-size: 1.02em; }
+
     .day-tabs {
       display: flex;
       gap: 8px;
@@ -302,7 +337,7 @@
     .chevron { color: var(--pine-700); font-size: 1.25rem; transition: transform .2s ease; }
     .day-card[open] .chevron { transform: rotate(180deg); }
     .day-content { padding: 0 16px 19px 87px; }
-    .day-content p:last-child, .day-content ul:last-child { margin-bottom: 0; }
+    .day-content p:last-child, .day-content ul:last-child, .day-content ol:last-child { margin-bottom: 0; }
 
     .callout {
       margin: 0 0 13px;
@@ -320,6 +355,18 @@
     .callout.warning strong:first-child { color: var(--red-ink); }
     .day-list { margin: 0; padding-left: 1.15rem; }
     .day-list li { padding-left: .15rem; }
+    .day-content a { font-weight: 750; }
+    .option-set {
+      margin: 0 0 13px;
+      padding: 13px 14px;
+      border: 1px solid #c9dbe2;
+      border-radius: 14px;
+      background: var(--blue);
+    }
+    .option-set > p { margin-bottom: 8px; color: var(--blue-ink); font-size: .85rem; font-weight: 850; }
+    .option-list { margin: 0; padding-left: 1.55rem; }
+    .option-list li { padding-left: .2rem; }
+    .option-list li::marker { color: var(--blue-ink); font-weight: 900; }
 
     .label {
       display: inline-block;
@@ -359,7 +406,27 @@
     .stay-head strong, .booking-head strong { font-size: .96rem; }
     .stay-head span, .booking-head span { color: var(--muted); font-size: .78rem; font-weight: 750; }
     .stay address, .booking p { margin: 0; color: var(--muted); font-size: .9rem; font-style: normal; }
-    .map-link { width: max-content; margin-top: 5px; font-size: .84rem; font-weight: 800; }
+    .map-actions {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 6px 0 0;
+      vertical-align: middle;
+    }
+    .map-actions.inline { margin: 0 0 0 5px; }
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 4px 9px;
+      border: 1px solid #bfcfc9;
+      border-radius: 10px;
+      background: var(--white);
+      font-size: .76rem;
+      font-weight: 850;
+      line-height: 1.2;
+      text-decoration: none;
+    }
 
     .safety {
       padding: 21px;
@@ -442,6 +509,7 @@
       .calendar-tile { min-height: 54px; }
       .day-content { padding: 0 14px 17px; }
       .safety-links { grid-template-columns: 1fr; }
+      .section-title-row { align-items: flex-start; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -451,7 +519,7 @@
 
     @media print {
       :root { --paper: #fff; --card: #fff; }
-      .main-nav, .day-tabs, .today-actions, .quick-grid, .map-link { display: none !important; }
+      .main-nav, .day-tabs, .today-actions, .quick-grid, .map-actions { display: none !important; }
       .hero { padding: 24px; background: #fff; color: #000; }
       .hero-copy, .eyebrow { color: #333; }
       main { width: 100%; padding: 0 20px; }
@@ -491,7 +559,7 @@
     <!--
       CONTENT MODEL (source: Banff Trip Plan.md)
       Hero = title/introduction; day cards = Day by Day; stays/bookings = Confirmed Bookings;
-      safety = Fire, Smoke & Warning Information + Before Each Day; more = Human Decisions,
+      safety = Fire, Smoke & Warning Information + Before Each Day; more = Pre-Trip Actions,
       Departure Snapshot, and View-Oriented Restaurant Options. Presentation behavior is additive.
     -->
     <section id="today" aria-labelledby="today-title">
@@ -502,8 +570,8 @@
           <p id="today-summary">Land at YYC, collect the rental car, and drive to the Canmore Airbnb.</p>
         </div>
         <div class="today-facts">
-          <div class="today-fact"><span>Key time</span><strong id="today-time">8:15 p.m. landing</strong></div>
-          <div class="today-fact"><span>Sleep</span><strong id="today-sleep">Canmore</strong></div>
+          <div class="today-fact"><span><b aria-hidden="true">⏰</b> Key time</span><strong id="today-time">8:15 p.m. landing</strong></div>
+          <div class="today-fact"><span><b aria-hidden="true">🛏️</b> Sleep</span><strong id="today-sleep">Canmore</strong></div>
         </div>
         <div class="today-actions">
           <button class="button" id="open-current" type="button">Open Jul 28 plan</button>
@@ -520,14 +588,26 @@
 
       <aside class="decision-banner" aria-label="Pre-trip action">
         <h3>One action before departure</h3>
-        <p>Record the cancellation deadlines for Murrieta’s, Bridget Bar, and Lupo; explicitly retain or cancel each by its deadline.</p>
+        <p>Record the cancellation deadlines for Murrieta’s, Bridgette Bar, and Lupo. Reconfirm the Aug 4 Deer Lodge pickup point, and keep the Aug 5 9:00 p.m. rental-car return in the final day’s timing.</p>
       </aside>
     </section>
 
     <section id="days" aria-labelledby="days-title">
       <div class="section-heading">
-        <h2 id="days-title">Day by day</h2>
-        <p>Tap a day for the full plan. Gold is booked; blue is a choice or fallback; red marks a restriction.</p>
+        <div class="section-title-row">
+          <h2 id="days-title">Day by day</h2>
+          <button class="section-toggle" id="toggle-days" type="button" aria-controls="day-list" aria-expanded="true">Collapse all</button>
+        </div>
+        <p>Every day is open for easy scanning. Gold is booked; blue is a choice or fallback; red marks a restriction.</p>
+      </div>
+
+      <div class="activity-key" aria-label="Activity icon key">
+        <span><b aria-hidden="true">🚗</b> Travel</span>
+        <span><b aria-hidden="true">🍽️</b> Food</span>
+        <span><b aria-hidden="true">🥾</b> Walk or hike</span>
+        <span><b aria-hidden="true">🛏️</b> Sleep</span>
+        <span><b aria-hidden="true">🎟️</b> Booked</span>
+        <span><b aria-hidden="true">⏰</b> Time</span>
       </div>
 
       <div class="day-tabs" aria-label="Jump to a day">
@@ -543,15 +623,15 @@
         <button class="day-tab" type="button" data-target="day-2026-08-06"><span>Thu</span><strong>6</strong></button>
       </div>
 
-      <div class="days">
-        <details class="day-card" id="day-2026-07-28" data-date="2026-07-28" data-day="Tuesday" data-title="Arrival in Canmore" data-summary="Land at YYC, collect the rental car, and drive to the Canmore Airbnb." data-time="8:15 p.m. landing" data-sleep="Canmore">
+      <div class="days" id="day-list">
+        <details class="day-card" id="day-2026-07-28" data-date="2026-07-28" data-day="Tuesday" data-title="Arrival in Canmore" data-summary="Land at YYC, collect the rental car, and drive to the Canmore Airbnb." data-time="8:15 p.m. landing" data-sleep="Canmore" open>
           <summary>
             <span class="calendar-tile"><span>Jul</span><strong>28</strong></span>
-            <span class="summary-copy"><strong class="day-title">Arrival in Canmore</strong><span class="summary-meta"><span>Tuesday</span><span class="time">8:15 p.m. land</span><span>Sleep: Canmore</span></span></span>
+            <span class="summary-copy"><strong class="day-title">Arrival in Canmore</strong><span class="summary-meta"><span>Tuesday</span><span class="time"><span aria-hidden="true">⏰</span> 8:15 p.m. land</span><span><span aria-hidden="true">🛏️</span> Canmore</span></span></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </summary>
           <div class="day-content">
-            <p class="callout booked"><strong>Fixed anchor:</strong> WestJet 1621 lands at YYC at 8:15 p.m.; collect the confirmed rental car and drive to the Canmore Airbnb.</p>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">✈️</span><strong>Fixed anchor:</strong> WestJet 1621 lands at YYC at 8:15 p.m.; collect the confirmed rental car and drive to the Canmore Airbnb.</p>
             <ul class="day-list">
               <li>Use the Airbnb’s known late-arrival procedure.</li>
               <li>Eat en route or carry an arrival snack; do not count on stores or restaurants being open.</li>
@@ -559,151 +639,187 @@
           </div>
         </details>
 
-        <details class="day-card" id="day-2026-07-29" data-date="2026-07-29" data-day="Wednesday" data-title="Canmore recovery day" data-summary="Keep it easy around Policeman’s Creek and the Bow River; dinner is in Canmore." data-time="7:00 p.m. dinner" data-sleep="Canmore">
+        <details class="day-card" id="day-2026-07-29" data-date="2026-07-29" data-day="Wednesday" data-title="Canmore recovery day" data-summary="Keep it easy around Policeman’s Creek and the Bow River; dinner is in Canmore." data-time="7:00 p.m. dinner" data-sleep="Canmore" open>
           <summary>
             <span class="calendar-tile"><span>Jul</span><strong>29</strong></span>
-            <span class="summary-copy"><strong class="day-title">Canmore recovery day</strong><span class="summary-meta"><span>Wednesday</span><span class="time">7:00 p.m. dinner</span><span>Sleep: Canmore</span></span></span>
+            <span class="summary-copy"><strong class="day-title">Canmore recovery day</strong><span class="summary-meta"><span>Wednesday</span><span class="time"><span aria-hidden="true">⏰</span> 7:00 p.m. dinner</span><span><span aria-hidden="true">🛏️</span> Canmore</span></span></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </summary>
           <div class="day-content">
-            <p class="callout booked"><span class="label booked">Cancellable</span><strong>Dinner:</strong> Murrieta’s, Canmore, 7:00 p.m.</p>
-            <p class="callout"><strong>Primary plan:</strong> Slow morning, then Policeman’s Creek and the Bow River paths. Keep the afternoon easy.</p>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">🍽️</span><span class="label option">Cancellable</span><strong>Dinner:</strong> <a href="https://murrietas.ca/canmore/" target="_blank" rel="noopener">Murrieta’s</a>, #200–737 8 Street, Canmore, 7:00 p.m. <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Murrieta%27s%2C%20737%208%20Street%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Murrieta%27s%2C%20737%208%20Street%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></p>
+            <p class="callout"><span class="item-icon" aria-hidden="true">🥾</span><strong>Primary plan:</strong> Slow morning, then <a href="https://www.canmore.ca/your-community/recreation/trails-and-pathways/walking-trails" target="_blank" rel="noopener">Policeman’s Creek and the Bow River paths</a>. Keep the afternoon easy.</p>
             <ul class="day-list">
-              <li><span class="label option">Substitute</span>Canmore town, cafés, galleries, or a short Quarry Lake stop.</li>
-              <li><span class="label option">Clear air only</span>Sunshine Meadows is a full-day substitute—not an add-on—after confirming lift/transport, trail conditions, and smoke.</li>
-              <li><span class="label closed">Closed</span>Do not plan Grassi Lakes or Highway 742 as a through route.</li>
-              <li><strong>Tomorrow:</strong> Allow enough time to reach the Banff Gondola for the booked 8:30 a.m. entry.</li>
+              <li><span class="label option">Substitute</span>Canmore town, cafés, galleries, or a short <a href="https://www.canmore.ca/your-community/recreation/trails-and-pathways/walking-trails" target="_blank" rel="noopener">Quarry Lake</a> stop.</li>
+              <li><span class="label option">Clear air only</span><a href="https://www.skibanff.com/" target="_blank" rel="noopener">Sunshine Meadows summer sightseeing</a>, 1 Sunshine Access Road, Banff <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Sunshine%20Village%2C%201%20Sunshine%20Access%20Road%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Sunshine%20Village%2C%201%20Sunshine%20Access%20Road%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>, is a full-day substitute—not an add-on—after confirming lift/transport, trail conditions, and smoke.</li>
+              <li><span class="label closed">Closed</span>Do not plan <a href="https://www.albertaparks.ca/media/cmininx4/cnc-closure-b-d-20250801.pdf" target="_blank" rel="noopener">Grassi Lakes</a> or Highway 742 as a through route.</li>
+              <li><strong>Tomorrow:</strong> Allow enough time to reach the <a href="https://www.banfflakelouise.com/business/banff-gondola" target="_blank" rel="noopener">Banff Gondola</a> for the booked 8:30 a.m. entry.</li>
             </ul>
           </div>
         </details>
 
-        <details class="day-card" id="day-2026-07-30" data-date="2026-07-30" data-day="Thursday" data-title="Banff Gondola &amp; breakfast" data-summary="The gondola, summit breakfast, and Bridget Bar set today’s timing." data-time="8:30 a.m. entry" data-sleep="Canmore">
+        <details class="day-card" id="day-2026-07-30" data-date="2026-07-30" data-day="Thursday" data-title="Banff Gondola breakfast &amp; nearby hike" data-summary="Drive to the Gondola, eat breakfast at the summit, take one nearby walk, and return to Canmore in the evening." data-time="8:30 a.m. entry" data-sleep="Canmore" open>
           <summary>
             <span class="calendar-tile"><span>Jul</span><strong>30</strong></span>
-            <span class="summary-copy"><strong class="day-title">Banff Gondola &amp; breakfast</strong><span class="summary-meta"><span>Thursday</span><span class="time">8:30 a.m. entry</span><span>Sleep: Canmore</span></span></span>
+            <span class="summary-copy"><strong class="day-title">Banff Gondola breakfast &amp; nearby hike</strong><span class="summary-meta"><span>Thursday</span><span class="time"><span aria-hidden="true">⏰</span> 8:30 a.m. entry</span><span><span aria-hidden="true">🛏️</span> Canmore</span></span></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </summary>
           <div class="day-content">
-            <p class="callout booked"><span class="label booked">Booked</span>Gondola entry 8:30 a.m. · Northern Lights Alpine Kitchen breakfast 9:00 a.m. · descend 11:30 a.m. · Bridget Bar dinner 7:15 p.m.</p>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">🎟️</span><span class="label booked">Booked</span><a href="https://www.banfflakelouise.com/business/banff-gondola" target="_blank" rel="noopener">Banff Gondola</a>, 100 Mountain Avenue: entry 8:30 a.m. · <a href="https://www.banfflakelouise.com/business/northern-lights-alpine-kitchen" target="_blank" rel="noopener">Northern Lights Alpine Kitchen</a> summit breakfast 9:00 a.m. · descend 11:30 a.m. <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Banff%20Gondola%2C%20100%20Mountain%20Avenue%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Banff%20Gondola%2C%20100%20Mountain%20Avenue%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></p>
+            <p class="callout"><span class="item-icon" aria-hidden="true">🚗</span><strong>Plan:</strong> Drive from Canmore to the Gondola, eat breakfast at the top, take one nearby walk, and return to Canmore in the evening.</p>
+            <div class="option-set">
+              <p><span class="item-icon" aria-hidden="true">🥾</span>Nearby walk options · choose one</p>
+              <ol class="option-list">
+                <li><strong>Primary:</strong> Walk the <a href="https://www.banfflakelouise.com/business/banff-gondola" target="_blank" rel="noopener">summit boardwalk and viewpoints</a> after breakfast and before descending, subject to weather and visibility.</li>
+                <li>After descending, walk the short <a href="https://www.banff.ca/654/Bow-Falls-Trail" target="_blank" rel="noopener">Bow Falls Trail</a> and stop at <a href="https://www.banff.ca/1110/Surprise-Corner/" target="_blank" rel="noopener">Surprise Corner</a>.</li>
+                <li>After descending, visit <a href="https://parks.canada.ca/lhn-nhs/ab/caveandbasin" target="_blank" rel="noopener">Cave and Basin</a> and use its nearby walking paths.</li>
+              </ol>
+            </div>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">🍽️</span><span class="label option">Cancellable</span><strong>Possible dinner:</strong> <a href="https://www.bridgettebar.com/contact-canmore" target="_blank" rel="noopener">Bridgette Bar</a>, 1030 Spring Creek Drive, Canmore, at 7:15 p.m. <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Bridgette%20Bar%2C%201030%20Spring%20Creek%20Drive%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Bridgette%20Bar%2C%201030%20Spring%20Creek%20Drive%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></p>
             <ul class="day-list">
-              <li>Explore the summit boardwalk and viewpoints at an easy pace around breakfast, subject to weather and visibility.</li>
-              <li><span class="label option">Choose one</span>After descending: Bow Falls + Surprise Corner, Cave and Basin, or Banff town. Then return to Canmore.</li>
-              <li>Keep enough margin to park and arrive at Bridget Bar unhurried.</li>
-              <li><strong>Do not stack:</strong> Lake Louise/Moraine Lake, Tunnel Mountain, Lake Minnewanka, horseback riding, or a longer hike.</li>
+              <li><span class="label option">Low-energy fallback</span>Use Banff town instead of a walk if weather, smoke, or energy makes that the better choice.</li>
+              <li><strong>Do not stack:</strong> <a href="https://www.banfflakelouise.com/sightseeing/lakes" target="_blank" rel="noopener">Lake Louise or Moraine Lake</a>, <a href="https://www.banfflakelouise.com/experiences/tunnel-mountain-summit-trail" target="_blank" rel="noopener">Tunnel Mountain</a>, <a href="https://www.banfflakelouise.com/blog/things-to-do-lake-minnewanka-summer" target="_blank" rel="noopener">Lake Minnewanka</a>, horseback riding, or a longer hike.</li>
             </ul>
           </div>
         </details>
 
-        <details class="day-card" id="day-2026-07-31" data-date="2026-07-31" data-day="Friday" data-title="Johnston Canyon &amp; Banff" data-summary="Start early for Lower Falls, then choose one compact Banff afternoon before dinner." data-time="6:30 a.m. leave" data-sleep="Canmore">
+        <details class="day-card" id="day-2026-07-31" data-date="2026-07-31" data-day="Friday" data-title="Johnston Canyon &amp; Banff" data-summary="Start early for Lower Falls, then choose one compact Banff afternoon before dinner." data-time="6:30 a.m. leave" data-sleep="Canmore" open>
           <summary>
             <span class="calendar-tile"><span>Jul</span><strong>31</strong></span>
-            <span class="summary-copy"><strong class="day-title">Johnston Canyon &amp; Banff</strong><span class="summary-meta"><span>Friday</span><span class="time">6:30 a.m. leave</span><span>Sleep: Canmore</span></span></span>
+            <span class="summary-copy"><strong class="day-title">Johnston Canyon &amp; Banff</strong><span class="summary-meta"><span>Friday</span><span class="time"><span aria-hidden="true">⏰</span> 6:30 a.m. leave</span><span><span aria-hidden="true">🛏️</span> Canmore</span></span></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </summary>
           <div class="day-content">
-            <p class="callout booked"><span class="label booked">Cancellable</span><strong>Dinner:</strong> Lupo Italian, Banff, 5:00 p.m.</p>
-            <p class="callout"><strong>Primary plan:</strong> Leave Canmore around 6:30 a.m.; aim to start Johnston Canyon around 7:15. Walk to Lower Falls; continue to Upper Falls only if everyone feels good and conditions are clear.</p>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">🍽️</span><span class="label option">Cancellable</span><strong>Dinner:</strong> <a href="https://www.lupobanff.com/" target="_blank" rel="noopener">Lupo Italian</a>, 201–208 Wolf Street, Banff, 5:00 p.m. <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Lupo%20Italian%2C%20208%20Wolf%20Street%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Lupo%20Italian%2C%20208%20Wolf%20Street%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></p>
+            <p class="callout"><span class="item-icon" aria-hidden="true">🥾</span><strong>Primary plan:</strong> Leave Canmore around 6:30 a.m.; aim to start <a href="https://www.banfflakelouise.com/blog/discover-more-johnston-canyon-summer" target="_blank" rel="noopener">Johnston Canyon</a> around 7:15. Walk to Lower Falls; continue to Upper Falls only if everyone feels good and conditions are clear.</p>
             <ul class="day-list">
               <li>Stay in Banff after the canyon—do not make an unnecessary Canmore round trip before dinner.</li>
-              <li><span class="label option">Choose one</span>Banff town, Cave and Basin, Bow Falls + Surprise Corner, Lake Minnewanka scenic loop, Tunnel Mountain Trail, or rest. Tunnel Mountain only after Lower Falls and only if everyone wants the climb. Do not combine it with Lake Minnewanka.</li>
-              <li>Upper Hot Springs can work after dinner if energy allows.</li>
-              <li><strong>Alternatives, not add-ons:</strong> Banff Gondola, Sunshine Meadows, horseback riding, and Kootenay.</li>
+            </ul>
+            <div class="option-set">
+              <p><span class="item-icon" aria-hidden="true">🥾</span>Compact afternoon options · choose one</p>
+              <ol class="option-list">
+                <li>Banff town or rest.</li>
+                <li><a href="https://parks.canada.ca/lhn-nhs/ab/caveandbasin" target="_blank" rel="noopener">Cave and Basin</a>.</li>
+                <li><a href="https://www.banff.ca/654/Bow-Falls-Trail" target="_blank" rel="noopener">Bow Falls</a> and <a href="https://www.banff.ca/1110/Surprise-Corner/" target="_blank" rel="noopener">Surprise Corner</a>.</li>
+                <li><a href="https://www.banfflakelouise.com/blog/things-to-do-lake-minnewanka-summer" target="_blank" rel="noopener">Lake Minnewanka scenic loop</a>.</li>
+                <li><a href="https://www.banfflakelouise.com/experiences/tunnel-mountain-summit-trail" target="_blank" rel="noopener">Tunnel Mountain Trail</a>, only after Lower Falls and only if everyone wants the climb.</li>
+              </ol>
+            </div>
+            <ul class="day-list">
+              <li>Do not combine Lake Minnewanka and Tunnel Mountain after the canyon.</li>
+              <li><a href="https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs" target="_blank" rel="noopener">Banff Upper Hot Springs</a> can work after dinner if energy allows.</li>
+              <li><strong>Alternatives, not add-ons:</strong> <a href="https://www.banfflakelouise.com/business/banff-gondola" target="_blank" rel="noopener">Banff Gondola</a>, <a href="https://www.skibanff.com/" target="_blank" rel="noopener">Sunshine Meadows</a>, horseback riding, and Kootenay.</li>
             </ul>
           </div>
         </details>
 
-        <details class="day-card" id="day-2026-08-01" data-date="2026-08-01" data-day="Saturday" data-title="Canmore to Jasper" data-summary="Drive the Icefields Parkway with two priority stops and a few condition-dependent options." data-time="6:30–7:00 a.m. leave" data-sleep="Jasper">
+        <details class="day-card" id="day-2026-08-01" data-date="2026-08-01" data-day="Saturday" data-title="Canmore to Jasper" data-summary="Drive the Icefields Parkway with two priority stops and a few condition-dependent options." data-time="6:30–7:00 a.m. leave" data-sleep="Jasper" open>
           <summary>
             <span class="calendar-tile"><span>Aug</span><strong>1</strong></span>
-            <span class="summary-copy"><strong class="day-title">Canmore to Jasper</strong><span class="summary-meta"><span>Saturday</span><span class="time">6:30–7:00 a.m. leave</span><span>Sleep: Jasper</span></span></span>
+            <span class="summary-copy"><strong class="day-title">Canmore to Jasper</strong><span class="summary-meta"><span>Saturday</span><span class="time"><span aria-hidden="true">⏰</span> 6:30–7:00 a.m. leave</span><span><span aria-hidden="true">🛏️</span> Jasper</span></span></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </summary>
           <div class="day-content">
-            <p class="callout booked"><strong>Fixed anchor:</strong> Check out of Canmore, drive north, and check in at the Astoria Hotel in Jasper.</p>
-            <p class="callout"><strong>Primary plan:</strong> Start with a full tank, packed lunch, water, and a Highway 93 check. Prioritize the Columbia Icefield / Athabasca Glacier viewpoint (view only; no glacier walk or climb) and Athabasca Falls.</p>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">🚗</span><strong>Fixed anchor:</strong> Check out of Canmore, drive north, and check in at the Astoria Hotel in Jasper.</p>
+            <p class="callout"><strong>Primary plan:</strong> Start with a full tank, packed lunch, water, and a Highway 93 check. Choose up to four stops in the priority order below; save overflow for Aug 3.</p>
+            <div class="option-set">
+              <p><span class="item-icon" aria-hidden="true">🥾</span>Scenic stop options · priority order</p>
+              <ol class="option-list">
+                <li><a href="https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/glacier-athabasca" target="_blank" rel="noopener">Columbia Icefield / Athabasca Glacier viewpoint</a>—view only; no glacier walk or climb.</li>
+                <li><a href="https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/athabasca" target="_blank" rel="noopener">Athabasca Falls</a>.</li>
+                <li><a href="https://www.banfflakelouise.com/blog/waterfall-walks-banff-national-park" target="_blank" rel="noopener">Bow Lake</a>, if time and conditions allow.</li>
+                <li><a href="https://www.parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking" target="_blank" rel="noopener">Peyto Lake</a>, if official access is clear.</li>
+                <li><a href="https://www.banfflakelouise.com/experiences/mistaya-canyon" target="_blank" rel="noopener">Mistaya Canyon</a>, if time and conditions allow.</li>
+                <li><a href="https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/sunwapta" target="_blank" rel="noopener">Sunwapta Falls</a>, if time and conditions allow.</li>
+              </ol>
+            </div>
             <ul class="day-list">
-              <li><span class="label option">If time allows</span>Bow Lake, Peyto Lake, Mistaya Canyon, or Sunwapta Falls. Choose up to four main stops total; save overflow for Aug 3.</li>
-              <li><span class="label closed">Restriction · checked Jul 26</span>Peyto Pit Road is closed through Aug 15. Use only official public access and skip Peyto Lake if access is unclear.</li>
+              <li><span class="label closed">Restriction · checked Jul 26</span><a href="https://www.parks.canada.ca/pn-np/ab/banff/bulletins" target="_blank" rel="noopener">Peyto Pit Road is closed through Aug 15</a>. Use only official public access and skip Peyto Lake if access is unclear.</li>
               <li>Arrive in Jasper before dinner.</li>
             </ul>
           </div>
         </details>
 
-        <details class="day-card" id="day-2026-08-02" data-date="2026-08-02" data-day="Sunday" data-title="Jasper &amp; Maligne Valley" data-summary="Drive the Maligne Valley and return with ample time for the booked evening wildlife tour." data-time="7:30 p.m. tour" data-sleep="Jasper">
+        <details class="day-card" id="day-2026-08-02" data-date="2026-08-02" data-day="Sunday" data-title="Jasper &amp; Maligne Valley" data-summary="Drive the Maligne Valley and return with ample time for the booked evening wildlife tour." data-time="7:30 p.m. tour" data-sleep="Jasper" open>
           <summary>
             <span class="calendar-tile"><span>Aug</span><strong>2</strong></span>
-            <span class="summary-copy"><strong class="day-title">Jasper &amp; Maligne Valley</strong><span class="summary-meta"><span>Sunday</span><span class="time">7:30 p.m. tour</span><span>Sleep: Jasper</span></span></span>
+            <span class="summary-copy"><strong class="day-title">Jasper &amp; Maligne Valley</strong><span class="summary-meta"><span>Sunday</span><span class="time"><span aria-hidden="true">⏰</span> 7:30 p.m. tour</span><span><span aria-hidden="true">🛏️</span> Jasper</span></span></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </summary>
           <div class="day-content">
-            <p class="callout booked"><span class="label booked">Booked</span><strong>Evening anchor:</strong> Jasper National Park evening wildlife tour at 7:30 p.m. Use the confirmation for pickup/check-in; be back, ready, and dressed for conditions well beforehand.</p>
-            <p class="callout"><strong>Selected plan—no cruise:</strong> Drive the Maligne Valley, visit Medicine Lake and the Maligne Lake lakeshore, then return to Jasper with ample time for the tour. Do not count on walk-up cruise availability.</p>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">🎟️</span><span class="label booked">Booked</span><strong>Evening anchor:</strong> Jasper National Park evening wildlife tour at 7:30 p.m. Use the confirmation for pickup/check-in; be back, ready, and dressed for conditions well beforehand.</p>
+            <p class="callout"><span class="item-icon" aria-hidden="true">🚗</span><strong>Selected plan—no cruise:</strong> Drive the Maligne Valley, visit <a href="https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/medicine" target="_blank" rel="noopener">Medicine Lake</a> and the <a href="https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/maligne" target="_blank" rel="noopener">Maligne Lake lakeshore</a>, then return to Jasper with ample time for the tour. Do not count on walk-up cruise availability.</p>
             <ul class="day-list">
-              <li><span class="label option">Only with ample time</span>A brief Pyramid and Patricia Lakes circuit. Skip it if it squeezes dinner or tour preparation.</li>
-              <li><span class="label option">Smoke fallback</span>Jasper town plus the indoor Jasper Planetarium, then return for the tour.</li>
-              <li><span class="label closed">Closed</span>Maligne Canyon and Cavell Road are unavailable for the 2026 season.</li>
-              <li>SkyTram, dark-sky programs, and Mount Robson remain unbooked substitutes—not additions.</li>
+              <li><span class="label option">Only with ample time</span>A brief <a href="https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/jasper" target="_blank" rel="noopener">Pyramid and Patricia Lakes</a> circuit. Skip it if it squeezes dinner or tour preparation.</li>
+              <li><span class="label option">Smoke fallback</span>Jasper town plus the indoor <a href="https://jasperplanetarium.com/our-tours/" target="_blank" rel="noopener">Jasper Planetarium</a>, Fairmont Jasper Park Lodge, 1 Old Lodge Road <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Jasper%20Planetarium%2C%201%20Old%20Lodge%20Road%2C%20Jasper%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Jasper%20Planetarium%2C%201%20Old%20Lodge%20Road%2C%20Jasper%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>, then return for the tour.</li>
+              <li><span class="label closed">Closed</span><a href="https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/canyon-maligne" target="_blank" rel="noopener">Maligne Canyon</a> and <a href="https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/cavell" target="_blank" rel="noopener">Cavell Road</a> are unavailable for the 2026 season.</li>
+              <li><a href="https://www.jasper.travel/experiences/jasper-skytram/" target="_blank" rel="noopener">Jasper SkyTram</a>, Whistlers Road, Jasper <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Jasper%20SkyTram%2C%20Whistlers%20Road%2C%20Jasper%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Jasper%20SkyTram%2C%20Whistlers%20Road%2C%20Jasper%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>; dark-sky programs; and <a href="https://bcparks.ca/mount-robson-park/" target="_blank" rel="noopener">Mount Robson</a> remain unbooked substitutes—not additions.</li>
               <li>Try for stars during the wildlife-tour window only if conditions and the operator allow; no separate late-night drive.</li>
             </ul>
           </div>
         </details>
 
-        <details class="day-card" id="day-2026-08-03" data-date="2026-08-03" data-day="Monday" data-title="Jasper to Lake Louise" data-summary="Drive south and use the route for up to three missed Parkway stops." data-time="About 8:00 a.m. leave" data-sleep="Lake Louise">
+        <details class="day-card" id="day-2026-08-03" data-date="2026-08-03" data-day="Monday" data-title="Jasper to Lake Louise" data-summary="Drive south and use the route for up to three missed Parkway stops." data-time="About 8:00 a.m. leave" data-sleep="Lake Louise" open>
           <summary>
             <span class="calendar-tile"><span>Aug</span><strong>3</strong></span>
-            <span class="summary-copy"><strong class="day-title">Jasper to Lake Louise</strong><span class="summary-meta"><span>Monday</span><span class="time">About 8:00 a.m. leave</span><span>Sleep: Lake Louise</span></span></span>
+            <span class="summary-copy"><strong class="day-title">Jasper to Lake Louise</strong><span class="summary-meta"><span>Monday</span><span class="time"><span aria-hidden="true">⏰</span> About 8:00 a.m. leave</span><span><span aria-hidden="true">🛏️</span> Lake Louise</span></span></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </summary>
           <div class="day-content">
-            <p class="callout booked"><strong>Fixed anchor:</strong> Check out of Jasper, drive south, and check in at Mountaineer Lodge in the late afternoon.</p>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">🚗</span><strong>Fixed anchor:</strong> Check out of Jasper, drive south, and check in at Mountaineer Lodge in the late afternoon.</p>
             <ul class="day-list">
-              <li>Use the drive for up to three missed stops: Athabasca Falls, the Columbia Icefield glacier viewpoint (view only; no climb), or one Banff-side stop—not every missed attraction.</li>
+              <li>Use the drive for up to three missed stops: <a href="https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/athabasca" target="_blank" rel="noopener">Athabasca Falls</a>, the <a href="https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/glacier-athabasca" target="_blank" rel="noopener">Columbia Icefield glacier viewpoint</a> (view only; no climb), or one Banff-side stop—not every missed attraction.</li>
               <li>Keep dinner easy and close to the lodge.</li>
             </ul>
           </div>
         </details>
 
-        <details class="day-card" id="day-2026-08-04" data-date="2026-08-04" data-day="Tuesday" data-title="Moraine Lake &amp; Lake Louise" data-summary="The booked bus tour visits Moraine Lake first, then Lake Louise." data-time="8:00 a.m. pickup" data-sleep="Lake Louise">
+        <details class="day-card" id="day-2026-08-04" data-date="2026-08-04" data-day="Tuesday" data-title="Moraine Lake &amp; Lake Louise" data-summary="The booked bus tour visits Moraine Lake first, then Lake Louise." data-time="8:00 a.m. pickup" data-sleep="Lake Louise" open>
           <summary>
             <span class="calendar-tile"><span>Aug</span><strong>4</strong></span>
-            <span class="summary-copy"><strong class="day-title">Moraine Lake &amp; Lake Louise</strong><span class="summary-meta"><span>Tuesday</span><span class="time">8:00 a.m. pickup</span><span>Sleep: Lake Louise</span></span></span>
+            <span class="summary-copy"><strong class="day-title">Moraine Lake &amp; Lake Louise</strong><span class="summary-meta"><span>Tuesday</span><span class="time"><span aria-hidden="true">⏰</span> 8:00 a.m. pickup</span><span><span aria-hidden="true">🛏️</span> Lake Louise</span></span></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </summary>
           <div class="day-content">
-            <p class="callout booked"><span class="label booked">Booked</span><strong>Bus tour:</strong> 8:00 a.m. pickup at Deer Lodge; Moraine Lake first, then Lake Louise.</p>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">🎟️</span><span class="label booked">Booked</span><strong>Bus tour:</strong> 8:00 a.m. pickup at <a href="https://www.banfflakelouise.com/business/deer-lodge" target="_blank" rel="noopener">Deer Lodge</a>, 109 Lake Louise Drive <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Deer%20Lodge%2C%20109%20Lake%20Louise%20Drive%2C%20Lake%20Louise%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Deer%20Lodge%2C%20109%20Lake%20Louise%20Drive%2C%20Lake%20Louise%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>; Moraine Lake first, then Lake Louise.</p>
             <ul class="day-list">
-              <li>Prioritize the Rockpile and a short shore walk at Moraine Lake, then the Lake Louise lakeshore.</li>
-              <li>Fairview Lookout only fits if the operator’s dwell time allows.</li>
-              <li>Whitehorn Bistro is cancelled. Do not add the Lake Louise Summer Gondola.</li>
-              <li>Plain of Six Glaciers does not fit this organized-tour day.</li>
+              <li><span class="label closed">Reconfirm pickup</span>Deer Lodge is currently listed closed until further notice. The tour confirmation controls; verify the exact check-in point with the operator.</li>
             </ul>
+            <div class="option-set">
+              <p><span class="item-icon" aria-hidden="true">🥾</span>Walking options · priority order</p>
+              <ol class="option-list">
+                <li><a href="https://www.banfflakelouise.com/blog/moraine-lake-travel-guide-banff-national-park" target="_blank" rel="noopener">Rockpile and a short Moraine Lake shore walk</a>.</li>
+                <li><a href="https://www.banfflakelouise.com/experiences/hike-lake-louise-lakeshore" target="_blank" rel="noopener">Lake Louise lakeshore</a>.</li>
+                <li><a href="https://www.banfflakelouise.com/experiences/fairview-lookout-trail" target="_blank" rel="noopener">Fairview Lookout</a>, only if the operator’s dwell time allows.</li>
+              </ol>
+            </div>
           </div>
         </details>
 
-        <details class="day-card" id="day-2026-08-05" data-date="2026-08-05" data-day="Wednesday" data-title="Yoho to Calgary" data-summary="Use the full Yoho sequence only if the road, parking, smoke, and timing cooperate." data-time="6:30–6:45 a.m. leave" data-sleep="Calgary">
+        <details class="day-card" id="day-2026-08-05" data-date="2026-08-05" data-day="Wednesday" data-title="Yoho to Calgary" data-summary="Use the full Yoho sequence only if the road, parking, smoke, and timing cooperate." data-time="6:30–6:45 a.m. leave" data-sleep="Calgary" open>
           <summary>
             <span class="calendar-tile"><span>Aug</span><strong>5</strong></span>
-            <span class="summary-copy"><strong class="day-title">Yoho to Calgary</strong><span class="summary-meta"><span>Wednesday</span><span class="time">6:30–6:45 a.m. leave</span><span>Sleep: Calgary</span></span></span>
+            <span class="summary-copy"><strong class="day-title">Yoho to Calgary</strong><span class="summary-meta"><span>Wednesday</span><span class="time"><span aria-hidden="true">⏰</span> 6:30–6:45 a.m. leave</span><span><span aria-hidden="true">🛏️</span> Calgary</span></span></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </summary>
           <div class="day-content">
-            <p class="callout booked"><strong>Fixed anchor:</strong> Check out, see Yoho if conditions allow, and reach the Calgary airport hotel.</p>
-            <p class="callout"><strong>Primary plan:</strong> Emerald Lake, Natural Bridge, then Takakkaw Falls if Yoho Valley Road is open and parking works. Arrive early for Takakkaw Falls; skip it if the schedule slips.</p>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">🚗</span><strong>Fixed anchor:</strong> Check out, see Yoho if conditions allow, check in and unload at the Calgary airport hotel, then return the rental car by 9:00 p.m.</p>
+            <p class="callout"><span class="item-icon" aria-hidden="true">🥾</span><strong>Primary plan:</strong> <a href="https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/jour-day.aspx" target="_blank" rel="noopener">Emerald Lake, Natural Bridge, then Takakkaw Falls</a> if Yoho Valley Road is open and parking works. Arrive early for Takakkaw Falls; skip it if the schedule slips.</p>
             <ul class="day-list">
-              <li><span class="label option">Lighter plan</span>Emerald Lake shoreline and Natural Bridge, then Calgary.</li>
+              <li><span class="label option">Lighter plan</span><a href="https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/jour-day.aspx" target="_blank" rel="noopener">Emerald Lake shoreline and Natural Bridge</a>, then Calgary.</li>
               <li><span class="label closed">Status · checked Jul 27</span>Yoho fire danger is high. Yoho Valley Road is open; parking is limited at Takakkaw Falls and Emerald Lake. If a lot is full, do not wait or circle. Use the shorter route, or go directly to Calgary if smoke, visibility, safety guidance, or fatigue makes sightseeing unsuitable.</li>
+              <li><span class="label booked">9:00 p.m.</span>Return the rental car after hotel check-in and unloading. Follow the rental confirmation for the return location; use the hotel shuttle or a taxi/rideshare back to the hotel as needed.</li>
             </ul>
           </div>
         </details>
 
-        <details class="day-card" id="day-2026-08-06" data-date="2026-08-06" data-day="Thursday" data-title="Fly home" data-summary="Return the rental car and fly from Calgary to Detroit." data-time="8:00 a.m. reach YYC" data-sleep="Home">
+        <details class="day-card" id="day-2026-08-06" data-date="2026-08-06" data-day="Thursday" data-title="Fly home" data-summary="Travel from the airport hotel to YYC and fly home; the rental car was returned the prior evening." data-time="8:00 a.m. reach YYC" data-sleep="Home" open>
           <summary>
             <span class="calendar-tile"><span>Aug</span><strong>6</strong></span>
-            <span class="summary-copy"><strong class="day-title">Fly home</strong><span class="summary-meta"><span>Thursday</span><span class="time">8:00 a.m. reach YYC</span><span>Fly to Detroit</span></span></span>
+            <span class="summary-copy"><strong class="day-title">Fly home</strong><span class="summary-meta"><span>Thursday</span><span class="time"><span aria-hidden="true">⏰</span> 8:00 a.m. reach YYC</span><span><span aria-hidden="true">✈️</span> Detroit</span></span></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </summary>
           <div class="day-content">
-            <p class="callout booked"><strong>Fixed anchor:</strong> Leave the airport hotel in time to reach YYC around 8:00 a.m., return the rental car, and check in for WestJet 1620 at 11:00 a.m. Arrival in Detroit is 4:40 p.m.</p>
+            <p class="callout booked"><span class="item-icon" aria-hidden="true">✈️</span><strong>Fixed anchor:</strong> Leave the airport hotel in time to reach YYC around 8:00 a.m. The rental car was returned the prior evening; use the hotel shuttle or a taxi/rideshare, then check in for WestJet 1620 at 11:00 a.m. Arrival in Detroit is 4:40 p.m.</p>
           </div>
         </details>
       </div>
@@ -711,7 +827,7 @@
 
     <section id="stays" aria-labelledby="stays-title">
       <div class="section-heading">
-        <h2 id="stays-title">Where we sleep</h2>
+        <h2 id="stays-title"><span aria-hidden="true">🛏️</span> Where we sleep</h2>
         <p>Fixed lodging anchors, with one-tap map searches for arrival.</p>
       </div>
       <div class="card-grid">
@@ -721,12 +837,12 @@
             <div class="stay">
               <div class="stay-head"><strong>Canmore Airbnb</strong><span>Jul 28–Aug 1</span></div>
               <address>379 Spring Creek Drive, Canmore</address>
-              <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=379%20Spring%20Creek%20Drive%20Canmore" rel="noopener">Open in maps ↗</a>
+              <span class="map-actions"><a class="map-link" href="https://maps.apple.com/?q=379%20Spring%20Creek%20Drive%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=379%20Spring%20Creek%20Drive%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>
             </div>
             <div class="stay">
-              <div class="stay-head"><strong>Astoria Hotel</strong><span>Aug 1–3</span></div>
+              <div class="stay-head"><strong><a href="https://www.astoriahotel.com/contact" target="_blank" rel="noopener">Astoria Hotel</a></strong><span>Aug 1–3</span></div>
               <address>404 Connaught Drive, Jasper</address>
-              <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Astoria%20Hotel%20404%20Connaught%20Drive%20Jasper" rel="noopener">Open in maps ↗</a>
+              <span class="map-actions"><a class="map-link" href="https://maps.apple.com/?q=Astoria%20Hotel%2C%20404%20Connaught%20Drive%2C%20Jasper%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Astoria%20Hotel%2C%20404%20Connaught%20Drive%2C%20Jasper%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>
             </div>
           </div>
         </article>
@@ -734,14 +850,14 @@
           <h3>Lake Louise &amp; Calgary</h3>
           <div class="stay-list">
             <div class="stay">
-              <div class="stay-head"><strong>Mountaineer Lodge</strong><span>Aug 3–5</span></div>
+              <div class="stay-head"><strong><a href="https://mountaineerlodge.com/the-hotel" target="_blank" rel="noopener">Mountaineer Lodge</a></strong><span>Aug 3–5</span></div>
               <address>101 Village Road, Lake Louise</address>
-              <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Mountaineer%20Lodge%20101%20Village%20Road%20Lake%20Louise" rel="noopener">Open in maps ↗</a>
+              <span class="map-actions"><a class="map-link" href="https://maps.apple.com/?q=Mountaineer%20Lodge%2C%20101%20Village%20Road%2C%20Lake%20Louise%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Mountaineer%20Lodge%2C%20101%20Village%20Road%2C%20Lake%20Louise%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>
             </div>
             <div class="stay">
-              <div class="stay-head"><strong>Holiday Inn &amp; Suites Calgary Airport North</strong><span>Aug 5–6</span></div>
+              <div class="stay-head"><strong><a href="https://www.ihg.com/holidayinn/hotels/us/en/calgary/yycan/hoteldetail/directions" target="_blank" rel="noopener">Holiday Inn &amp; Suites Calgary Airport North</a></strong><span>Aug 5–6</span></div>
               <address>20 Freeport Place NE, Calgary</address>
-              <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Holiday%20Inn%20Suites%20Calgary%20Airport%20North%2020%20Freeport%20Place%20NE" rel="noopener">Open in maps ↗</a>
+              <span class="map-actions"><a class="map-link" href="https://maps.apple.com/?q=Holiday%20Inn%20Calgary%20Airport%20North%2C%2020%20Freeport%20Place%20NE%2C%20Calgary%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Holiday%20Inn%20Calgary%20Airport%20North%2C%2020%20Freeport%20Place%20NE%2C%20Calgary%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>
             </div>
           </div>
         </article>
@@ -750,33 +866,33 @@
 
     <section id="bookings" aria-labelledby="bookings-title">
       <div class="section-heading">
-        <h2 id="bookings-title">Confirmed bookings</h2>
+        <h2 id="bookings-title"><span aria-hidden="true">🎟️</span> Confirmed bookings</h2>
         <p>These are facts. Restaurant reservations are confirmed but adjustable; tours remain booked unless we choose otherwise.</p>
       </div>
       <div class="card-grid">
         <article class="info-card">
-          <h3>Flights &amp; transport</h3>
+          <h3><span aria-hidden="true">✈️</span> Flights &amp; transport</h3>
           <div class="booking-list">
             <div class="booking"><div class="booking-head"><strong>WestJet 1621 · DTW → YYC</strong><span>Jul 28</span></div><p>6:10–8:15 p.m.</p></div>
-            <div class="booking"><div class="booking-head"><strong>Rental car</strong><span>Jul 28–Aug 6</span></div><p><span class="label booked">Confirmed</span></p></div>
+            <div class="booking"><div class="booking-head"><strong>Rental car</strong><span>Jul 28–Aug 5</span></div><p><span class="label booked">Confirmed</span> Return by 9:00 p.m. on Aug 5.</p></div>
             <div class="booking"><div class="booking-head"><strong>WestJet 1620 · YYC → DTW</strong><span>Aug 6</span></div><p>11:00 a.m.–4:40 p.m.</p></div>
           </div>
         </article>
         <article class="info-card">
-          <h3>Tours &amp; timed activities</h3>
+          <h3><span aria-hidden="true">🎟️</span> Tours &amp; timed activities</h3>
           <div class="booking-list">
-            <div class="booking"><div class="booking-head"><strong>Banff Gondola</strong><span>Jul 30</span></div><p>8:30 a.m. entry</p></div>
-            <div class="booking"><div class="booking-head"><strong>Northern Lights breakfast</strong><span>Jul 30</span></div><p>9:00 a.m.; descend 11:30 a.m.</p></div>
+            <div class="booking"><div class="booking-head"><strong><a href="https://www.banfflakelouise.com/business/banff-gondola" target="_blank" rel="noopener">Banff Gondola</a></strong><span>Jul 30</span></div><p>100 Mountain Avenue, Banff · 8:30 a.m. entry <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Banff%20Gondola%2C%20100%20Mountain%20Avenue%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Banff%20Gondola%2C%20100%20Mountain%20Avenue%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></p></div>
+            <div class="booking"><div class="booking-head"><strong><a href="https://www.banfflakelouise.com/business/northern-lights-alpine-kitchen" target="_blank" rel="noopener">Northern Lights breakfast</a></strong><span>Jul 30</span></div><p>100 Mountain Avenue, Banff · 9:00 a.m.; descend 11:30 a.m. <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Banff%20Gondola%2C%20100%20Mountain%20Avenue%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Banff%20Gondola%2C%20100%20Mountain%20Avenue%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></p></div>
             <div class="booking"><div class="booking-head"><strong>Jasper wildlife tour</strong><span>Aug 2</span></div><p>7:30 p.m.; use confirmation for pickup/check-in</p></div>
-            <div class="booking"><div class="booking-head"><strong>Moraine Lake / Lake Louise bus</strong><span>Aug 4</span></div><p>8:00 a.m. Deer Lodge pickup; Moraine Lake first</p></div>
+            <div class="booking"><div class="booking-head"><strong>Moraine Lake / Lake Louise bus</strong><span>Aug 4</span></div><p>8:00 a.m. Deer Lodge pickup, 109 Lake Louise Drive · <span class="label closed">Reconfirm exact pickup</span> <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Deer%20Lodge%2C%20109%20Lake%20Louise%20Drive%2C%20Lake%20Louise%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Deer%20Lodge%2C%20109%20Lake%20Louise%20Drive%2C%20Lake%20Louise%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></p></div>
           </div>
         </article>
         <article class="info-card wide">
-          <h3>Restaurants</h3>
+          <h3><span aria-hidden="true">🍽️</span> Restaurants</h3>
           <div class="booking-list">
-            <div class="booking"><div class="booking-head"><strong>Murrieta’s · Canmore</strong><span>Jul 29 · 7:00 p.m.</span></div><p><span class="label option">Cancellable</span></p></div>
-            <div class="booking"><div class="booking-head"><strong>Bridget Bar · Banff</strong><span>Jul 30 · 7:15 p.m.</span></div><p><span class="label booked">Booked</span></p></div>
-            <div class="booking"><div class="booking-head"><strong>Lupo Italian · Banff</strong><span>Jul 31 · 5:00 p.m.</span></div><p><span class="label option">Cancellable</span></p></div>
+            <div class="booking"><div class="booking-head"><strong><a href="https://murrietas.ca/canmore/" target="_blank" rel="noopener">Murrieta’s · Canmore</a></strong><span>Jul 29 · 7:00 p.m.</span></div><p>#200–737 8 Street, Canmore · <span class="label option">Cancellable</span> <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Murrieta%27s%2C%20737%208%20Street%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Murrieta%27s%2C%20737%208%20Street%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></p></div>
+            <div class="booking"><div class="booking-head"><strong><a href="https://www.bridgettebar.com/contact-canmore" target="_blank" rel="noopener">Bridgette Bar · Canmore</a></strong><span>Jul 30 · 7:15 p.m.</span></div><p>1030 Spring Creek Drive, Canmore · <span class="label option">Cancellable</span> <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Bridgette%20Bar%2C%201030%20Spring%20Creek%20Drive%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Bridgette%20Bar%2C%201030%20Spring%20Creek%20Drive%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></p></div>
+            <div class="booking"><div class="booking-head"><strong><a href="https://www.lupobanff.com/" target="_blank" rel="noopener">Lupo Italian · Banff</a></strong><span>Jul 31 · 5:00 p.m.</span></div><p>201–208 Wolf Street, Banff · <span class="label option">Cancellable</span> <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Lupo%20Italian%2C%20208%20Wolf%20Street%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Lupo%20Italian%2C%20208%20Wolf%20Street%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></p></div>
           </div>
         </article>
       </div>
@@ -807,21 +923,8 @@
     <section id="more" aria-labelledby="more-title">
       <div class="section-heading">
         <h2 id="more-title">More useful context</h2>
-        <p>Day-of decisions, the departure snapshot, and unbooked meal ideas—available without crowding the daily plan.</p>
+        <p>The departure snapshot and unbooked meal ideas—available without crowding the daily plan.</p>
       </div>
-
-      <details class="more-card">
-        <summary>Decide on the day</summary>
-        <div class="more-content">
-          <ul>
-            <li><strong>Jul 30:</strong> After gondola breakfast and descent, choose exactly one low-effort Banff stop. Be at Bridget Bar for 7:15 p.m.</li>
-            <li><strong>Jul 31:</strong> Keep Johnston Canyon, then choose at most one compact Banff afternoon option.</li>
-            <li><strong>Aug 1 / Aug 3:</strong> Prioritize the Columbia Icefield glacier viewpoint and Athabasca Falls across the two drives; use Aug 3 for only one to three missed suitable stops.</li>
-            <li><strong>Aug 2:</strong> Follow the selected no-cruise Maligne Valley plan. Pyramid and Patricia Lakes are optional only with ample time. Use the Planetarium in smoke.</li>
-            <li><strong>Aug 5:</strong> Use the full Yoho sequence only with an early start, open road, and feasible parking. Otherwise use the lighter plan or drive directly to Calgary.</li>
-          </ul>
-        </div>
-      </details>
 
       <details class="more-card">
         <summary>Departure snapshot · checked Jul 26–27</summary>
@@ -839,12 +942,12 @@
         <div class="more-content">
           <p>These are unbooked suggestions, not additions to the plan. Check current hours, availability, weather, and timing before reserving.</p>
           <ul>
-            <li><strong>Northern Lights Alpine Kitchen · Jul 30:</strong> booked 9:00 a.m. summit breakfast.</li>
-            <li><strong>Bridget Bar · Jul 30:</strong> booked 7:15 p.m. Banff dinner.</li>
-            <li><a href="https://www.banffjaspercollection.com/canadian-rockies/banff/stories/dine-outside-best-patios-in-banff/">Rose &amp; Crown rooftop</a>: casual Banff patio option for Jul 30 or 31.</li>
-            <li><a href="https://www.banffjaspercollection.com/attractions/columbia-icefield/dining/altitude/">Altitude Restaurant</a>: beside the Columbia Icefield; only if Aug 1 or 3 timing allows.</li>
-            <li><a href="https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/dining/">Lake House Café or Maligne Lake Chalet</a>: compatible with Aug 2 only if the daytime plan returns in time for the tour.</li>
-            <li><a href="https://www.fairmont.com/lake-louise/dining/">Lakeview Lounge or Fairview Bar &amp; Restaurant</a>: only if Aug 3 evening or Aug 4 tour timing leaves ample time.</li>
+            <li><strong><a href="https://www.banfflakelouise.com/business/northern-lights-alpine-kitchen" target="_blank" rel="noopener">Northern Lights Alpine Kitchen</a> · Jul 30:</strong> booked 9:00 a.m. summit breakfast; 100 Mountain Avenue, Banff. <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Banff%20Gondola%2C%20100%20Mountain%20Avenue%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Banff%20Gondola%2C%20100%20Mountain%20Avenue%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></li>
+            <li><strong><a href="https://www.bridgettebar.com/contact-canmore" target="_blank" rel="noopener">Bridgette Bar</a> · Jul 30:</strong> possible cancellable 7:15 p.m. dinner, 1030 Spring Creek Drive, Canmore. <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Bridgette%20Bar%2C%201030%20Spring%20Creek%20Drive%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Bridgette%20Bar%2C%201030%20Spring%20Creek%20Drive%2C%20Canmore%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span></li>
+            <li><a href="https://www.banfflakelouise.com/business/rose-crown" target="_blank" rel="noopener">Rose &amp; Crown rooftop</a>, 202 Banff Avenue <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Rose%20and%20Crown%2C%20202%20Banff%20Avenue%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Rose%20and%20Crown%2C%20202%20Banff%20Avenue%2C%20Banff%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>: casual Banff patio option for Jul 30 or 31.</li>
+            <li><a href="https://www.banffjaspercollection.com/attractions/columbia-icefield/dining/altitude/" target="_blank" rel="noopener">Altitude Restaurant</a>, Columbia Icefield Glacier Discovery Centre, Icefields Parkway <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Altitude%20Restaurant%2C%20Columbia%20Icefield%20Discovery%20Centre%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Altitude%20Restaurant%2C%20Columbia%20Icefield%20Discovery%20Centre%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>: only if Aug 1 or 3 timing allows.</li>
+            <li><a href="https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/dining/" target="_blank" rel="noopener">Lake House Café or Maligne Lake Chalet</a>, at the end of Maligne Lake Road <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Maligne%20Lake%20Chalet%2C%20Maligne%20Lake%20Road%2C%20Jasper%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Maligne%20Lake%20Chalet%2C%20Maligne%20Lake%20Road%2C%20Jasper%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>: compatible with Aug 2 only if the daytime plan returns in time for the tour.</li>
+            <li><a href="https://www.banfflakelouise.com/business/lakeview-lounge" target="_blank" rel="noopener">Lakeview Lounge</a> or <a href="https://www.banfflakelouise.com/business/fairview-bar-restaurant" target="_blank" rel="noopener">Fairview Bar &amp; Restaurant</a>, 111 Lake Louise Drive <span class="map-actions inline"><a class="map-link" href="https://maps.apple.com/?q=Fairmont%20Chateau%20Lake%20Louise%2C%20111%20Lake%20Louise%20Drive%2C%20Lake%20Louise%2C%20AB" target="_blank" rel="noopener">Apple Maps ↗</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Fairmont%20Chateau%20Lake%20Louise%2C%20111%20Lake%20Louise%20Drive%2C%20Lake%20Louise%2C%20AB" target="_blank" rel="noopener">Google Maps ↗</a></span>: only if Aug 3 evening or Aug 4 tour timing leaves ample time.</li>
           </ul>
         </div>
       </details>
@@ -929,6 +1032,20 @@
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
       });
+
+      const toggleDays = document.querySelector('#toggle-days');
+      const syncToggleLabel = () => {
+        const allOpen = dayCards.every((card) => card.open);
+        toggleDays.textContent = allOpen ? 'Collapse all' : 'Expand all';
+        toggleDays.setAttribute('aria-expanded', String(allOpen));
+      };
+      toggleDays.addEventListener('click', () => {
+        const shouldOpen = !dayCards.every((card) => card.open);
+        dayCards.forEach((card) => { card.open = shouldOpen; });
+        syncToggleLabel();
+      });
+      dayCards.forEach((card) => card.addEventListener('toggle', syncToggleLabel));
+      syncToggleLabel();
 
       const shareButton = document.querySelector('#share-plan');
       const shareStatus = document.querySelector('#share-status');
